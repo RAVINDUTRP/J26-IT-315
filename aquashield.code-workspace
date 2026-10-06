@@ -1,0 +1,12 @@
+{
+  "folders": [
+    { "name": "AquaShield (root)", "path": "." },
+    { "name": "C1 Sensing", "path": "component1_sensing" },
+    { "name": "C2 Comms", "path": "component2_comms" },
+    { "name": "C3 Prediction", "path": "component3_prediction" },
+    { "name": "C4 Decision", "path": "component4_decision" },
+    { "name": "Backend", "path": "backend" },
+    { "name": "Frontend", "path": "frontend" }
+  ],
+  "settings": {}
+}

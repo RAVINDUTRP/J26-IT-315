@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Observation (Component 1 -> Component 2)",
+  "type": "object",
+  "required": ["site_id", "timestamp", "location", "readings", "battery_pct", "sensor_confidence", "sampling"],
+  "properties": {
+    "site_id": { "type": "string", "example": "ambatale" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "location": { "type": "object", "properties": { "name": {"type":"string"}, "lat": {"type":"number"}, "lon": {"type":"number"} } },
+    "readings": { "type": "object", "properties": { "ph": {"type":"number"}, "turbidity_ntu": {"type":"number"}, "ec_us_cm": {"type":"number"}, "tds_ppm": {"type":"number"}, "temp_c": {"type":"number"} } },
+    "battery_pct": { "type": "number" },
+    "sensor_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "sampling": { "type": "object", "properties": { "priority_parameters": {"type":"array","items":{"type":"string"}}, "interval_s": {"type":"integer"}, "transmission_priority": {"enum":["low","normal","high"]}, "reasons": {"type":"array","items":{"type":"string"}} } }
+  }
+}

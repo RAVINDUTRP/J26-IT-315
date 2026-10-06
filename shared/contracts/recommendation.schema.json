@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Recommendation (Component 4 output to dashboard)",
+  "type": "object",
+  "required": ["site_id", "rank", "priority_score", "actions", "factors"],
+  "properties": {
+    "site_id": { "type": "string" },
+    "rank": { "type": "integer" },
+    "priority_score": { "type": "number" },
+    "population_exposed": { "type": "integer" },
+    "communication_status": { "enum": ["good", "degraded", "lost"] },
+    "actions": { "type": "array", "items": { "type": "object", "properties": { "action": {"type":"string"}, "urgency": {"enum":["now","within_1h","within_6h","monitor"]}, "rationale": {"type":"string"} } } },
+    "factors": { "type": "array", "items": { "type": "object", "properties": { "name": {"type":"string"}, "weight": {"type":"number"} } } }
+  }
+}
