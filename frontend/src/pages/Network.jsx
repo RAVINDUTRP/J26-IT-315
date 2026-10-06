@@ -28,17 +28,17 @@ export default function Network() {
           <div>
             <h1>Resilient LoRa Mesh</h1>
             <p className="lede">
-              Adaptive multi-hop communication for water-quality telemetry when cellular or public internet infrastructure is unavailable.
-            </p>
+              Self-healing multi-hop communication for water-quality telemetry when cellular or public internet infrastructure is unavailable.</p>
           </div>
           <button className="action-button" onClick={simulateFailure}>
             {failedNode ? 'Restore R4' : 'Simulate R4 failure'}
           </button>
         </div>
         {failing.length ? (
-          <p className="alert-line">
-            {failing[0].id} degradation risk is {Math.round(failing[0].failure_risk * 100)}%. The routing layer keeps traffic on the healthier path.
-          </p>
+  <p className="alert-line">
+  {failing[0].id} has elevated failure risk ({Math.round(failing[0].failure_risk * 100)}%).
+  The self-healing layer monitors the node and maintains communication through an available path.
+</p>
         ) : null}
       </header>
 
@@ -77,8 +77,11 @@ export default function Network() {
             ))}
           </svg>
           <p className="muted small">
-            {failedNode ? `Failure injected at ${failedNode}; traffic is rerouted through ${net.active_path.join(' → ')}.` : `Active route: ${net.active_path.join(' → ')}`}
-          </p>
+  {failedNode
+    ? `Failure detected at ${failedNode}; communication recovered through ${net.active_path.join(' → ')}.`
+    : `Current communication path: ${net.active_path.join(' → ')}`
+  }
+</p>
         </Panel>
 
         <Panel title="Node health" note="Health combines RSSI, SNR, battery and congestion.">
@@ -103,9 +106,9 @@ export default function Network() {
       </div>
 
       <div className="two">
-        <Panel title="Adaptive route ranking" note={`Algorithm: ${net.routing.algorithm}`}>
+       <Panel title="Self-Healing Route Recovery" note={`Mechanism: ${net.routing.algorithm}`}>
           <table>
-            <thead><tr><th>Rank</th><th>Path</th><th>Score</th><th>Hops</th><th>Status</th></tr></thead>
+           <thead><tr><th>Rank</th><th>Path</th><th>Score</th><th>Hops</th><th>Status</th></tr></thead>
             <tbody>
               {ranked.map((r, i) => (
                 <tr key={r.path.join('-')}>
