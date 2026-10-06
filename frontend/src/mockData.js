@@ -35,22 +35,55 @@ export function observations(siteId, n = 24) {
   })
 }
 
-export function network() {
+export function network(failedNode = '') {
+  const nodes = [
+    { id: 'S1', role: 'sensor', health: 0.91, battery: 78, rssi: -82, snr: 7.5, congestion: 0.12, failure_risk: 0.09, x: 60, y: 90 },
+    { id: 'S2', role: 'sensor', health: 0.88, battery: 71, rssi: -88, snr: 6.0, congestion: 0.18, failure_risk: 0.10, x: 60, y: 250 },
+    { id: 'R1', role: 'relay', health: 0.84, battery: 69, rssi: -91, snr: 5.1, congestion: 0.28, failure_risk: 0.25, x: 190, y: 40 },
+    { id: 'R2', role: 'relay', health: 0.93, battery: 88, rssi: -79, snr: 8.4, congestion: 0.12, failure_risk: 0.08, x: 190, y: 170 },
+    { id: 'R3', role: 'relay', health: 0.86, battery: 74, rssi: -90, snr: 5.5, congestion: 0.22, failure_risk: 0.16, x: 190, y: 295 },
+    { id: 'R4', role: 'relay', health: failedNode === 'R4' ? 0.08 : 0.38, battery: failedNode === 'R4' ? 5 : 19, rssi: failedNode === 'R4' ? -115 : -108, snr: failedNode === 'R4' ? -7 : -2, congestion: failedNode === 'R4' ? 0.95 : 0.72, failure_risk: 0.99, x: 340, y: 110, predicted_failure: 0.99 },
+    { id: 'R5', role: 'relay', health: 0.90, battery: 83, rssi: -81, snr: 7.9, congestion: 0.16, failure_risk: 0.09, x: 340, y: 250 },
+    { id: 'GW', role: 'gateway', health: 0.97, battery: 100, rssi: -70, snr: 10.0, congestion: 0.05, failure_risk: 0.03, x: 480, y: 170 },
+  ]
+  const links = [['S1','R1'],['S1','R2'],['S2','R2'],['S2','R3'],['R1','R4'],['R2','R4'],['R2','R5'],['R3','R5'],['R4','GW'],['R5','GW']]
+  const activePath = failedNode === 'R4' ? ['S1', 'R2', 'R5', 'GW'] : ['S1', 'R2', 'R5', 'GW']
   return {
-    nodes: [
-      { id: 'S1', role: 'sensor', health: 0.91, battery: 78, rssi: -82, snr: 7.5, x: 60, y: 90 },
-      { id: 'S2', role: 'sensor', health: 0.88, battery: 71, rssi: -88, snr: 6.0, x: 60, y: 250 },
-      { id: 'R1', role: 'relay', health: 0.84, battery: 69, rssi: -91, snr: 5.1, x: 190, y: 40 },
-      { id: 'R2', role: 'relay', health: 0.93, battery: 88, rssi: -79, snr: 8.4, x: 190, y: 170 },
-      { id: 'R3', role: 'relay', health: 0.86, battery: 74, rssi: -90, snr: 5.5, x: 190, y: 295 },
-      { id: 'R4', role: 'relay', health: 0.38, battery: 19, rssi: -108, snr: -2.0, x: 340, y: 110, predicted_failure: 0.82 },
-      { id: 'R5', role: 'relay', health: 0.9, battery: 83, rssi: -81, snr: 7.9, x: 340, y: 250 },
-      { id: 'GW', role: 'gateway', health: 0.97, battery: 100, rssi: -70, snr: 10.0, x: 480, y: 170 },
-    ],
-    links: [['S1','R1'],['S1','R2'],['S2','R2'],['S2','R3'],['R1','R4'],['R2','R4'],['R2','R5'],['R3','R5'],['R4','GW'],['R5','GW']],
-    active_path: ['S1', 'R2', 'R5', 'GW'],
+    nodes,
+    links,
+    active_path: activePath,
     previous_path: ['S1', 'R1', 'R4', 'GW'],
-    pdr_percent: 97.4, latency_ms: 840, recovery_s: 2.1,
+    routing: {
+      algorithm: 'Adaptive Multi-Hop Routing',
+      switched: Boolean(failedNode),
+      active_score: failedNode ? 0.31 : 0.88,
+      selected_score: 0.88,
+      ranked_paths: [
+        { path: ['S1','R2','R5','GW'], score: 0.88, hops: 3, available: true },
+        { path: ['S1','R2','R4','GW'], score: failedNode ? 0 : 0.31, hops: 3, available: !failedNode },
+        { path: ['S1','R1','R4','GW'], score: failedNode ? 0 : 0.26, hops: 3, available: !failedNode },
+      ],
+    },
+    pdr_percent: failedNode ? 98.0 : 97.4,
+    latency_ms: failedNode ? 905 : 840,
+    recovery_s: failedNode ? 0.8 : 2.1,
+    energy_mwh: failedNode ? 19.4 : 18.6,
+    route_switch_count: failedNode ? 4 : 3,
+    failed_node: failedNode || null,
+  }
+}
+
+export function c2Metrics() {
+  return { pdr_percent: 97.8, latency_ms: 865, recovery_ms: 512, energy_mwh: 18.9, route_switch_rate: 0.95 }
+}
+
+export function packetDemo() {
+  return {
+    sequence: 42,
+    plain_bytes: 19,
+    protected_bytes: 27,
+    recovered: { node_id: 1, sequence: 42, ph: 7.12, turbidity_ntu: 28.4, tds_ppm: 132, temperature_c: 28.4, battery_pct: 87 },
+    pipeline: ['sensor reading', 'compact binary encoding', 'rolling-key XOR protection', 'multi-hop LoRa transmission', 'gateway authentication/decryption', 'binary decode'],
   }
 }
 

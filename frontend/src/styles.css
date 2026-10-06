@@ -99,3 +99,11 @@ tr:last-child td { border-bottom: 0; }
   .two, .two.tight { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+.action-button { margin-left: auto; border: 0; border-radius: 8px; padding: 10px 14px; background: var(--ink); color: #fff; cursor: pointer; font: inherit; font-weight: 600; }
+.action-button:hover { background: #1d5262; }
+.alert-line { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; background: #fbeceb; color: #8c241d; font-size: 14px; }
+.pipeline { display: flex; flex-direction: column; align-items: stretch; gap: 7px; }
+.pipeline span { padding: 9px 12px; border: 1px solid var(--line); border-radius: 7px; background: #f7fafb; font-size: 13px; }
+.pipeline b { text-align: center; color: var(--river); }
+@media (max-width: 700px) { .action-button { margin-left: 0; } }

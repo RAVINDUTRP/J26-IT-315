@@ -10,11 +10,14 @@ async function get(path, fallback) {
     if (!res.ok) throw new Error(res.statusText)
     return await res.json()
   } catch {
-    return fallback() // backend down -> keep the demo alive
+    return fallback()
   }
 }
 
 export const getObservations = (id) => get(`/api/c1/observations/${id}`, () => mock.observations(id))
-export const getNetwork = () => get('/api/c2/network', mock.network)
+export const getNetwork = (failedNode = '') =>
+  get(`/api/c2/network${failedNode ? `?failed_node=${encodeURIComponent(failedNode)}` : ''}`, () => mock.network(failedNode))
+export const getC2Metrics = () => get('/api/c2/metrics', mock.c2Metrics)
+export const getPacketDemo = () => get('/api/c2/packet-demo', mock.packetDemo)
 export const getRisk = () => get('/api/c3/risk', mock.risk)
 export const getRecommendations = () => get('/api/c4/recommendations', mock.recommendations)

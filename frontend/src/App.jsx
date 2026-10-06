@@ -17,7 +17,7 @@ export default function App() {
     <div className="shell">
       <aside className="rail">
         <NavLink to="/" end className="brand">
-          <span className="brand-name">AquaShiled</span>
+          <span className="brand-name">AquaShield</span>
           <span className="brand-sub">Kelani River water watch</span>
         </NavLink>
         <nav aria-label="Pipeline" className="line">
