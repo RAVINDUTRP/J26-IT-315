@@ -1,4 +1,5 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
+import { MotionConfig, motion } from 'motion/react'
 import Overview from './pages/Overview.jsx'
 import Sensing from './pages/Sensing.jsx'
 import Network from './pages/Network.jsx'
@@ -21,45 +22,76 @@ export default function App() {
   const current = `${location.pathname}${location.search}`
 
   return (
-    <div className="shell">
-      <aside className="rail">
-        <Link to="/" className="brand">
-          <span className="brand-mark" aria-hidden="true"><Icon name="shield" /></span>
-          <span className="brand-copy">
-            <span className="brand-name">AquaShield</span>
-            <span className="brand-sub">ADAPTIVE INTEL</span>
+    <MotionConfig reducedMotion="user">
+      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)]">
+        <motion.aside
+          initial={{ opacity: 0, x: -12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.28, ease: 'easeOut' }}
+          className="sticky top-0 flex h-screen min-h-[620px] flex-col gap-8 overflow-y-auto border-r border-[#202a3c] bg-[#080e1d] px-5 py-7 text-[#f5f7fb] max-lg:static max-lg:h-auto max-lg:min-h-0 max-lg:gap-5"
+        >
+        <Link to="/" className="flex items-center gap-3.5 px-0.5">
+          <span aria-hidden="true" className="grid size-14 shrink-0 place-items-center rounded-[13px] bg-gradient-to-br from-[#3979ff] to-[#04bfd1] text-white">
+            <Icon name="shield" className="size-8" />
+          </span>
+          <span className="flex min-w-0 flex-col">
+            <span className="text-[23px] font-bold leading-[1.15] tracking-[-0.5px] text-[#f5f7fb]">AquaShield</span>
+            <span className="mt-1.5 whitespace-nowrap font-mono text-[10px] font-bold leading-tight tracking-[2px] text-[#00c8dc]">ADAPTIVE INTEL</span>
           </span>
         </Link>
-        <nav aria-label="Main navigation" className="nav-list">
+        <nav aria-label="Main navigation" className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-[7px] lg:flex lg:flex-col">
           {NAV_ITEMS.map((item) => (
-            <Link
+            <motion.div
               key={item.to}
-              to={item.to}
-              aria-current={current === item.to ? 'page' : undefined}
-              className={`nav-item${current === item.to ? ' active' : ''}`}
+              layout
+              whileHover={{ x: 2 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+              className="relative"
             >
-              <Icon name={item.icon} />
-              <span className="nav-label">{item.label}</span>
-              {item.badge && <span className={`nav-badge${item.badgeTone ? ` ${item.badgeTone}` : ''}`}>{item.badge}</span>}
-            </Link>
+              {current === item.to && (
+                <motion.span
+                  layoutId="sidebar-active-item"
+                  transition={{ type: 'spring', stiffness: 500, damping: 38 }}
+                  className="absolute inset-0 rounded-[11px] border border-[#3880ff] bg-[#111e39] shadow-[inset_0_0_0_1px_rgb(56_128_255_/_12%)]"
+                />
+              )}
+              <Link
+                to={item.to}
+                aria-current={current === item.to ? 'page' : undefined}
+                className={`relative z-10 flex min-h-[52px] w-full items-center gap-[13px] rounded-[11px] border border-transparent px-3 py-2 text-[15px] font-medium leading-[1.35] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 ${current === item.to ? 'text-[#f7f9ff]' : 'text-[#98a5bb] hover:text-[#e8eef8]'}`}
+              >
+                <Icon name={item.icon} className={`size-5 shrink-0 ${current === item.to ? 'text-[#00c9dc]' : ''}`} />
+                <span className="min-w-0">{item.label}</span>
+                {item.badge && (
+                  <span className={`ml-auto shrink-0 whitespace-nowrap rounded-md px-2 py-1 font-mono text-[10px] font-semibold leading-tight ${item.badgeTone === 'cyan' ? 'bg-[#0b2634] text-[#00d3df]' : 'bg-[#1c273c] text-[#a8b4c8]'}`}>
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            </motion.div>
           ))}
         </nav>
-        <div className="rail-foot"><span className="status-dot" />Demo system online</div>
-      </aside>
-      <main className="main">
-        <Routes>
-          <Route path="/" element={<Overview />} />
-          <Route path="/sensing" element={<Sensing />} />
-          <Route path="/network" element={<Network />} />
-          <Route path="/prediction" element={<Prediction />} />
-          <Route path="/decision" element={<Decision />} />
-        </Routes>
-      </main>
-    </div>
+        <div className="mt-auto flex items-center gap-2.5 px-1.5 pt-3.5 text-xs text-[#7f8da4] max-lg:mt-0 max-lg:pt-0">
+          <span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgb(11_200_149_/_12%)]" />
+          Demo system online
+        </div>
+        </motion.aside>
+        <main className="main">
+          <Routes>
+            <Route path="/" element={<Overview />} />
+            <Route path="/sensing" element={<Sensing />} />
+            <Route path="/network" element={<Network />} />
+            <Route path="/prediction" element={<Prediction />} />
+            <Route path="/decision" element={<Decision />} />
+          </Routes>
+        </main>
+      </div>
+    </MotionConfig>
   )
 }
 
-function Icon({ name }) {
+function Icon({ name, className = '' }) {
   const shared = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }
   const shapes = {
     dashboard: <><rect x="3.5" y="3.5" width="17" height="17" rx="2" /><path d="M3.5 9h17M9 9v11.5" /></>,
@@ -71,5 +103,5 @@ function Icon({ name }) {
     bell: <><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Zm-8 12h4" /></>,
     database: <><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7" /></>,
   }
-  return <svg className="nav-icon" {...shared}>{shapes[name]}</svg>
+  return <svg className={className} {...shared}>{shapes[name]}</svg>
 }
