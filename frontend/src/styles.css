@@ -21,20 +21,70 @@ a { color: inherit; text-decoration: none; }
 .small { font-size: 13px; }
 .big { font: 700 36px/1.1 'Spectral', Georgia, serif; margin: 4px 0; }
 
-.shell { display: grid; grid-template-columns: 290px 1fr; min-height: 100vh; }
-.rail { background: var(--ink); color: #e7f0f3; padding: 28px 22px; display: flex; flex-direction: column; gap: 28px; }
-.brand { display: flex; flex-direction: column; }
-.brand-name { font: 700 26px 'Spectral', Georgia, serif; }
-.brand-sub { color: #9db8c1; font-size: 13px; }
-.line { position: relative; display: flex; flex-direction: column; gap: 6px; }
-.line::before { content: ''; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 3px; background: #2f5866; }
-.station { position: relative; display: flex; gap: 14px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; }
-.station small { display: block; color: #9db8c1; font-size: 12px; }
-.station:hover { background: #1c424f; }
-.station.active { background: #1c424f; }
-.dot { flex: none; width: 24px; height: 24px; border-radius: 50%; background: #2f5866; display: grid; place-items: center; font-weight: 600; font-size: 13px; z-index: 1; }
-.station.active .dot { background: #6cc0da; color: var(--ink); }
-.rail-foot { margin-top: auto; color: #9db8c1; font-size: 12px; }
+.shell { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; }
+.rail {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  min-height: 620px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding: 28px 20px 22px;
+  color: #f5f7fb;
+  background: #080e1d;
+  border-right: 1px solid #202a3c;
+}
+.brand { display: flex; align-items: center; gap: 14px; padding: 0 2px; }
+.brand-mark {
+  width: 54px;
+  height: 54px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #3979ff, #04bfd1);
+}
+.brand-mark .nav-icon { width: 30px; height: 30px; }
+.brand-copy { min-width: 0; display: flex; flex-direction: column; }
+.brand-name { color: #f5f7fb; font: 700 23px/1.15 'Public Sans', system-ui, sans-serif; letter-spacing: -0.5px; }
+.brand-sub { margin-top: 6px; color: #00c8dc; font: 700 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 2px; white-space: nowrap; }
+.nav-list { display: flex; flex-direction: column; gap: 7px; }
+.nav-item {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: #98a5bb;
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.35;
+  transition: color 140ms ease, background 140ms ease, border-color 140ms ease;
+}
+.nav-item:hover { color: #e8eef8; background: #101a30; }
+.nav-item.active { color: #f7f9ff; background: #111e39; border-color: #3880ff; box-shadow: inset 0 0 0 1px rgb(56 128 255 / 12%); }
+.nav-icon { width: 21px; height: 21px; flex: none; color: currentColor; }
+.nav-item.active .nav-icon { color: #00c9dc; }
+.nav-label { min-width: 0; }
+.nav-badge {
+  flex: none;
+  margin-left: auto;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #a8b4c8;
+  background: #1c273c;
+  font: 600 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: nowrap;
+}
+.nav-badge.cyan { color: #00d3df; background: #0b2634; }
+.rail-foot { display: flex; align-items: center; gap: 9px; margin-top: auto; padding: 14px 5px 0; color: #7f8da4; font-size: 12px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #0bc895; box-shadow: 0 0 0 4px rgb(11 200 149 / 12%); }
 
 .main { padding: 36px 40px 60px; max-width: 1180px; }
 .page-head { margin-bottom: 24px; }
@@ -93,8 +143,10 @@ tr:last-child td { border-bottom: 0; }
 
 @media (max-width: 900px) {
   .shell { grid-template-columns: 1fr; }
-  .rail { padding: 18px; gap: 16px; }
-  .main { padding: 24px 18px 48px; }
+  .rail { position: static; height: auto; min-height: 0; padding: 18px; gap: 18px; }
+  .nav-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .rail-foot { margin-top: 0; padding-top: 2px; }
+  .main { max-width: none; padding: 24px 18px 48px; }
   .flow { grid-template-columns: 1fr 1fr; }
   .two, .two.tight { grid-template-columns: 1fr; }
 }
