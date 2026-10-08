@@ -1,6 +1,6 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
-import { MotionConfig, motion } from 'motion/react'
-import Overview from './pages/Overview.jsx'
+import { MotionConfig, motion } from 'framer-motion'
+import Dashboard from './pages/dashboard.jsx'
 import Sensing from './pages/Sensing.jsx'
 import Network from './pages/Network.jsx'
 import Prediction from './pages/Prediction.jsx'
@@ -77,9 +77,9 @@ export default function App() {
           Demo system online
         </div>
         </motion.aside>
-        <main className="main">
+        <main className="min-w-0 max-w-[1180px] px-10 pt-9 pb-[60px] max-[900px]:max-w-none max-[900px]:px-[18px] max-[900px]:pt-6 max-[900px]:pb-12">
           <Routes>
-            <Route path="/" element={<Overview />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/sensing" element={<Sensing />} />
             <Route path="/network" element={<Network />} />
             <Route path="/prediction" element={<Prediction />} />
