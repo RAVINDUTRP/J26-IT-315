@@ -1,10 +1,12 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { MotionConfig, motion } from 'framer-motion'
-import Dashboard from './pages/dashboard.jsx'
-import Sensing from './pages/Sensing.jsx'
-import Network from './pages/Network.jsx'
-import Prediction from './pages/Prediction.jsx'
-import Decision from './pages/Decision.jsx'
+
+const Dashboard = lazy(() => import('./pages/dashboard.jsx'))
+const Sensing = lazy(() => import('./pages/Sensing.jsx'))
+const Network = lazy(() => import('./pages/Network.jsx'))
+const Prediction = lazy(() => import('./pages/Prediction.jsx'))
+const Decision = lazy(() => import('./pages/Decision.jsx'))
 
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', icon: 'dashboard' },
@@ -78,13 +80,15 @@ export default function App() {
         </div>
         </motion.aside>
         <main className="min-w-0 max-w-[1180px] px-10 pt-9 pb-[60px] max-[900px]:max-w-none max-[900px]:px-[18px] max-[900px]:pt-6 max-[900px]:pb-12">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/sensing" element={<Sensing />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/prediction" element={<Prediction />} />
-            <Route path="/decision" element={<Decision />} />
-          </Routes>
+          <Suspense fallback={<div className="grid min-h-64 place-items-center text-sm text-slate-400" role="status">Loading dashboard…</div>}>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/sensing" element={<Sensing />} />
+              <Route path="/network" element={<Network />} />
+              <Route path="/prediction" element={<Prediction />} />
+              <Route path="/decision" element={<Decision />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </MotionConfig>
