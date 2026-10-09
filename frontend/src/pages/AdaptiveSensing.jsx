@@ -34,10 +34,10 @@ export default function AdaptiveSensing() {
   const delta = previous ? latest.rainfall_mm_h - previous.rainfall_mm_h : null
   const deltaLabel = delta === null ? 'Trend needs more readings' : delta > 0.05 ? `↑ ${delta.toFixed(1)} mm/h since previous sample` : delta < -0.05 ? `↓ ${Math.abs(delta).toFixed(1)} mm/h since previous sample` : 'Nearly unchanged from previous sample'
   const sortedFactors = [
-    { label: 'Rainfall', value: `${latest.rainfall_mm_h} mm/h`, detail: deltaLabel, icon: 'rain', tint: 'text-blue-800', soft: 'bg-blue-100/80', cardBg: 'bg-blue-50', cardBorder: 'border-blue-100' },
-    { label: 'Priority parameters', value: `${prioritySet.size} selected`, detail: prioritySet.size ? priorityParams.filter((item) => prioritySet.has(item.id)).map((item) => item.name).join(' · ') : 'No parameter priorities reported', icon: 'activity', tint: 'text-violet-800', soft: 'bg-violet-100/80', cardBg: 'bg-violet-50', cardBorder: 'border-violet-100' },
-    { label: 'Sensor confidence', value: `${confidence}%`, detail: 'Latest reported confidence', icon: 'shield', tint: 'text-teal-800', soft: 'bg-teal-100/80', cardBg: 'bg-teal-50', cardBorder: 'border-teal-100' },
-    { label: 'Battery level', value: `${battery}%`, detail: 'Latest reported battery', icon: 'battery', tint: battery < 30 ? 'text-rose-800' : 'text-orange-800', soft: battery < 30 ? 'bg-rose-100/80' : 'bg-orange-100/80', cardBg: battery < 30 ? 'bg-rose-50' : 'bg-orange-50', cardBorder: battery < 30 ? 'border-rose-100' : 'border-orange-100' },
+    { label: 'Rainfall', value: latest.rainfall_mm_h, unit: 'mm/h', detail: deltaLabel, icon: 'rain', tint: 'text-blue-800', soft: 'bg-blue-100/80', cardBg: 'bg-blue-50', cardBorder: 'border-blue-100' },
+    { label: 'Priority parameters', value: prioritySet.size, unit: 'selected', detail: prioritySet.size ? priorityParams.filter((item) => prioritySet.has(item.id)).map((item) => item.name).join(' · ') : 'No parameter priorities reported', icon: 'activity', tint: 'text-violet-800', soft: 'bg-violet-100/80', cardBg: 'bg-violet-50', cardBorder: 'border-violet-100' },
+    { label: 'Sensor confidence', value: confidence, unit: '%', detail: 'Latest reported confidence', icon: 'shield', tint: 'text-teal-800', soft: 'bg-teal-100/80', cardBg: 'bg-teal-50', cardBorder: 'border-teal-100' },
+    { label: 'Battery level', value: battery, unit: '%', detail: 'Latest reported battery', icon: 'battery', tint: battery < 30 ? 'text-rose-800' : 'text-orange-800', soft: battery < 30 ? 'bg-rose-100/80' : 'bg-orange-100/80', cardBg: battery < 30 ? 'bg-rose-50' : 'bg-orange-50', cardBorder: battery < 30 ? 'border-rose-100' : 'border-orange-100' },
   ]
 
   return (
@@ -94,7 +94,10 @@ export default function AdaptiveSensing() {
                 <p className="text-sm font-medium text-slate-600">{factor.label}</p>
                 <span className={`grid size-9 place-items-center rounded-xl ${factor.soft} ${factor.tint}`}><MetricIcon name={factor.icon} /></span>
               </div>
-              <p className="metric-value mt-4">{factor.value}</p>
+              <p className="metric-value mt-4 flex items-baseline gap-2">
+                <span>{factor.value}</span>
+                <span className="text-base font-medium tracking-normal text-slate-600">{factor.unit}</span>
+              </p>
               <p className="mt-1 min-h-5 text-xs leading-5 text-slate-500">{factor.detail}</p>
             </motion.article>
           ))}
@@ -153,7 +156,6 @@ export default function AdaptiveSensing() {
         </div>
       </section>
 
-      <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">Adaptive schedules support research monitoring. Confirm unusual sensor readings with field sampling before operational action.</p>
     </div>
   )
 }
