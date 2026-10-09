@@ -34,10 +34,10 @@ export default function AdaptiveSensing() {
   const delta = previous ? latest.rainfall_mm_h - previous.rainfall_mm_h : null
   const deltaLabel = delta === null ? 'Trend needs more readings' : delta > 0.05 ? `↑ ${delta.toFixed(1)} mm/h since previous sample` : delta < -0.05 ? `↓ ${Math.abs(delta).toFixed(1)} mm/h since previous sample` : 'Nearly unchanged from previous sample'
   const sortedFactors = [
-    { label: 'Rainfall', value: `${latest.rainfall_mm_h} mm/h`, detail: deltaLabel, icon: 'rain', tint: 'text-blue-700', soft: 'bg-blue-50' },
-    { label: 'Priority parameters', value: `${prioritySet.size} selected`, detail: prioritySet.size ? priorityParams.filter((item) => prioritySet.has(item.id)).map((item) => item.name).join(' · ') : 'No parameter priorities reported', icon: 'activity', tint: 'text-teal-700', soft: 'bg-teal-50' },
-    { label: 'Sensor confidence', value: `${confidence}%`, detail: 'Latest reported confidence', icon: 'shield', tint: 'text-emerald-700', soft: 'bg-emerald-50' },
-    { label: 'Battery level', value: `${battery}%`, detail: 'Latest reported battery', icon: 'battery', tint: battery < 30 ? 'text-amber-700' : 'text-emerald-700', soft: battery < 30 ? 'bg-amber-50' : 'bg-emerald-50' },
+    { label: 'Rainfall', value: `${latest.rainfall_mm_h} mm/h`, detail: deltaLabel, icon: 'rain', tint: 'text-blue-800', soft: 'bg-blue-100/80', cardBg: 'bg-blue-50', cardBorder: 'border-blue-100' },
+    { label: 'Priority parameters', value: `${prioritySet.size} selected`, detail: prioritySet.size ? priorityParams.filter((item) => prioritySet.has(item.id)).map((item) => item.name).join(' · ') : 'No parameter priorities reported', icon: 'activity', tint: 'text-violet-800', soft: 'bg-violet-100/80', cardBg: 'bg-violet-50', cardBorder: 'border-violet-100' },
+    { label: 'Sensor confidence', value: `${confidence}%`, detail: 'Latest reported confidence', icon: 'shield', tint: 'text-teal-800', soft: 'bg-teal-100/80', cardBg: 'bg-teal-50', cardBorder: 'border-teal-100' },
+    { label: 'Battery level', value: `${battery}%`, detail: 'Latest reported battery', icon: 'battery', tint: battery < 30 ? 'text-rose-800' : 'text-orange-800', soft: battery < 30 ? 'bg-rose-100/80' : 'bg-orange-100/80', cardBg: battery < 30 ? 'bg-rose-50' : 'bg-orange-50', cardBorder: battery < 30 ? 'border-rose-100' : 'border-orange-100' },
   ]
 
   return (
@@ -89,7 +89,7 @@ export default function AdaptiveSensing() {
         </div>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {sortedFactors.map((factor, index) => (
-            <motion.article key={factor.label} {...rise} transition={{ duration: 0.26, delay: 0.04 * index }} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+            <motion.article key={factor.label} {...rise} transition={{ duration: 0.26, delay: 0.04 * index }} className={`min-h-36 rounded-2xl border ${factor.cardBorder} ${factor.cardBg} p-4 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-shadow hover:shadow-md sm:p-5`}>
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-medium text-slate-600">{factor.label}</p>
                 <span className={`grid size-9 place-items-center rounded-xl ${factor.soft} ${factor.tint}`}><MetricIcon name={factor.icon} /></span>
