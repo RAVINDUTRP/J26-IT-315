@@ -1,10 +1,18 @@
+import { lazy } from 'react'
 import { motion } from 'framer-motion'
+import { useSearchParams } from 'react-router-dom'
 import { getRecommendations } from '../api'
 import { useData, Pill, Loading, Panel, siteName, urgencyText } from '../components/ui.jsx'
 
 const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
+const AlertsPage = lazy(() => import('./Alerts.jsx'))
 
 export default function Decision() {
+  const [searchParams] = useSearchParams()
+  return searchParams.get('view') === 'alerts' ? <AlertsPage /> : <DecisionSupport />
+}
+
+function DecisionSupport() {
   const recs = useData(getRecommendations)
   if (!recs) return <Loading />
 
