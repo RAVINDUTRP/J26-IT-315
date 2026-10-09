@@ -1,10 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useSearchParams } from 'react-router-dom'
+import StationDropdown from '../components/StationDropdown.jsx'
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { getObservations } from '../api'
-import { siteName, useData } from '../components/ui.jsx'
+import { Loading, siteName, useData } from '../components/ui.jsx'
 
 const SITES = ['ambatale', 'biyagama']
+const AdaptiveSensing = lazy(() => import('./AdaptiveSensing.jsx'))
 const RANGES = [
   { label: '1H', hours: 1 },
   { label: '3H', hours: 3 },
@@ -17,6 +20,12 @@ const dateLabel = (value) => new Date(value).toLocaleDateString([], { day: '2-di
 const intervalLabel = (seconds = 0) => seconds >= 60 ? `${Math.round(seconds / 60)} min` : `${seconds} sec`
 
 export default function Sensing() {
+  const [searchParams] = useSearchParams()
+
+  return searchParams.get('view') === 'adaptive' ? <AdaptiveSensing /> : <WaterQuality />
+}
+
+function WaterQuality() {
   const [site, setSite] = useState('ambatale')
   const observations = useData(() => getObservations(site), [site])
 
@@ -88,7 +97,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
             </span>
             <span className="flex min-w-0 flex-col gap-1.5">
               <span id="monitoring-station-label" className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Selected monitoring station</span>
-              <StationDropdown site={site} onChange={onSiteChange} />
+              <StationDropdown site={site} onChange={onSiteChange} labelId="monitoring-station-label" />
             </span>
           </div>
           <div className={`inline-flex items-center gap-3 rounded-2xl border px-4 py-3 ${highPriority ? 'border-amber-200 bg-amber-50/80' : 'border-emerald-200 bg-emerald-50/80'}`}>
@@ -188,124 +197,6 @@ function MonitoringView({ observations, site, onSiteChange }) {
   )
 }
 
-function StationDropdown({ site, onChange }) {
-  const [open, setOpen] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(Math.max(0, SITES.indexOf(site)))
-  const rootRef = useRef(null)
-  const triggerRef = useRef(null)
-  const optionRefs = useRef([])
-  const selectedIndex = Math.max(0, SITES.indexOf(site))
-
-  useEffect(() => {
-    if (!open) return undefined
-    const closeOnOutsideClick = (event) => {
-      if (!rootRef.current?.contains(event.target)) setOpen(false)
-    }
-    document.addEventListener('pointerdown', closeOnOutsideClick)
-    return () => document.removeEventListener('pointerdown', closeOnOutsideClick)
-  }, [open])
-
-  useEffect(() => {
-    if (open) optionRefs.current[activeIndex]?.focus()
-  }, [open, activeIndex])
-
-  const openAt = (index = selectedIndex) => {
-    setActiveIndex(index)
-    setOpen(true)
-  }
-  const move = (index) => setActiveIndex((index + SITES.length) % SITES.length)
-  const choose = (id) => {
-    onChange(id)
-    setOpen(false)
-    triggerRef.current?.focus()
-  }
-  const onTriggerKeyDown = (event) => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      event.preventDefault()
-      openAt(selectedIndex)
-    } else if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault()
-      setOpen((current) => !current)
-      setActiveIndex(selectedIndex)
-    }
-  }
-  const onOptionKeyDown = (event, index) => {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault()
-      move(index + 1)
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault()
-      move(index - 1)
-    } else if (event.key === 'Home') {
-      event.preventDefault()
-      setActiveIndex(0)
-    } else if (event.key === 'End') {
-      event.preventDefault()
-      setActiveIndex(SITES.length - 1)
-    } else if (event.key === 'Escape') {
-      event.preventDefault()
-      setOpen(false)
-      triggerRef.current?.focus()
-    } else if (event.key === 'Tab') {
-      setOpen(false)
-    }
-  }
-
-  return (
-    <div ref={rootRef} className="relative w-full max-w-72">
-      <button
-        ref={triggerRef}
-        type="button"
-        role="combobox"
-        aria-labelledby="monitoring-station-label"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-controls="monitoring-station-options"
-        onClick={() => open ? setOpen(false) : openAt()}
-        onKeyDown={onTriggerKeyDown}
-        className={`flex w-full items-center justify-between gap-4 rounded-xl border bg-white px-3.5 py-2 text-left text-base font-semibold text-slate-900 shadow-sm transition sm:text-lg ${open ? 'border-teal-600 ring-4 ring-teal-600/10' : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'} focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-600/15`}
-      >
-        <span>{siteName(site)}</span>
-        <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className={`size-4 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`}>
-          <path d="m5 7.5 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -4, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.14, ease: 'easeOut' }}
-          className="absolute left-0 top-[calc(100%+8px)] z-30 w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_12px_32px_rgba(15,23,42,0.16)]"
-        >
-          <div id="monitoring-station-options" role="listbox" aria-labelledby="monitoring-station-label">
-            {SITES.map((id, index) => {
-              const selected = site === id
-              const active = activeIndex === index
-              return (
-                <button
-                  key={id}
-                  ref={(element) => { optionRefs.current[index] = element }}
-                  type="button"
-                  role="option"
-                  aria-selected={selected}
-                  tabIndex={active ? 0 : -1}
-                  onFocus={() => setActiveIndex(index)}
-                  onClick={() => choose(id)}
-                  onKeyDown={(event) => onOptionKeyDown(event, index)}
-                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${selected ? 'bg-teal-50 text-teal-900' : 'text-slate-700 hover:bg-slate-50'} ${active ? 'outline-none ring-2 ring-inset ring-teal-600/25' : ''}`}
-                >
-                  <span>{siteName(id)}</span>
-                  {selected && <span className="grid size-5 place-items-center rounded-full bg-teal-600 text-white"><svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="size-3.5"><path d="m3.5 8 3 3 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>}
-                </button>
-              )
-            })}
-          </div>
-        </motion.div>
-      )}
-    </div>
-  )
-}
-
 function DiagnosticRow({ label, value, valueClass = 'text-slate-800' }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-slate-100 py-3 last:border-b-0">
@@ -344,6 +235,9 @@ function MetricIcon({ name, className }) {
     conductivity: <path d="m13.5 2.5-9 11h7l-1 8 9-11h-7l1-8Z" />,
     temperature: <><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0Z" /><path d="M12 11v7" /></>,
     rain: <><path d="M12 3.5c-2 3-6 7.2-6 11a6 6 0 0 0 12 0c0-3.8-4-8-6-11Z" /><path d="m9 18 1-2m3 2 1-2" /></>,
+    activity: <path d="M2.5 12h4l3-8 5 16 3.2-8h3.8" />,
+    shield: <><path d="M12 3 19 6v5.3c0 4.7-2.9 7.8-7 9.7-4.1-1.9-7-5-7-9.7V6l7-3Z" /><path d="M12 8v4.5m0 3h.01" /></>,
+    battery: <><rect x="3" y="7" width="17" height="10" rx="2" /><path d="M22 10v4m-15-4v4m5-4v4" /></>,
   }
 
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={`size-5 shrink-0 ${className}`}>{paths[name]}</svg>
