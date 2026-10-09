@@ -21,7 +21,7 @@ export default function Sensing() {
   const observations = useData(() => getObservations(site), [site])
 
   return (
-    <div className="sensing-page -mx-[18px] -mt-6 -mb-12 min-h-screen bg-[#080d1d] px-[18px] pt-6 pb-12 text-slate-100 min-[901px]:-mx-10 min-[901px]:-mt-9 min-[901px]:px-10 min-[901px]:pt-9">
+    <div className="-mx-[18px] -mt-6 -mb-12 min-h-screen bg-[#080d1d] px-[18px] pt-6 pb-12 text-slate-100 min-[901px]:-mx-10 min-[901px]:-mt-9 min-[901px]:px-10 min-[901px]:pt-9">
       {!observations ? <PageLoading /> : observations.length ? (
         <MonitoringView observations={observations} site={site} onSiteChange={setSite} />
       ) : (
@@ -69,7 +69,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
           <p className="mt-1 text-sm text-slate-400 sm:text-base">Sensor readings and adaptive sampling for Kelani Basin monitoring sites.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3 sm:gap-5">
-          <span className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 font-mono text-xs font-semibold uppercase tracking-wide ${highPriority ? 'sensing-priority-high border-amber-500/40 bg-amber-500/10 text-amber-300' : 'sensing-priority-normal border-emerald-500/40 bg-emerald-500/10 text-emerald-300'}`}>
+          <span className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 font-mono text-xs font-semibold uppercase tracking-wide ${highPriority ? 'border-amber-500/40 bg-amber-500/10 text-amber-300' : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'}`}>
             <span className={`size-2 rounded-full ${highPriority ? 'bg-amber-400' : 'bg-emerald-400'}`} />
             {highPriority ? 'Elevated sampling' : 'Nominal sensing'}
           </span>
@@ -86,7 +86,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
           <select
             value={site}
             onChange={(event) => onSiteChange(event.target.value)}
-            className="sensing-select min-w-52 rounded-xl border border-slate-700 bg-[#111a30] px-4 py-2.5 text-sm font-semibold text-white shadow-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+            className="min-w-52 rounded-xl border border-slate-700 bg-[#111a30] px-4 py-2.5 text-sm font-semibold text-white shadow-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
           >
             {SITES.map((id) => <option key={id} value={id}>{siteName(id)}</option>)}
           </select>
@@ -112,7 +112,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
                 key={metric.label}
                 {...rise}
                 transition={{ duration: 0.28, delay: index * 0.04 }}
-                className="sensing-surface min-h-36 rounded-2xl border border-slate-800 bg-[#111a30] p-4 shadow-sm transition-colors hover:border-slate-700 sm:p-5"
+                className="min-h-36 rounded-2xl border border-slate-800 bg-[#111a30] p-4 shadow-sm transition-colors hover:border-slate-700 sm:p-5"
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-sm font-medium text-slate-400">{metric.label}</p>
@@ -131,13 +131,13 @@ function MonitoringView({ observations, site, onSiteChange }) {
           </div>
         </motion.div>
 
-        <motion.aside {...rise} transition={{ duration: 0.32, delay: 0.13 }} className="sensing-surface overflow-hidden rounded-2xl border border-slate-800 bg-[#111a30] shadow-sm">
+        <motion.aside {...rise} transition={{ duration: 0.32, delay: 0.13 }} className="overflow-hidden rounded-2xl border border-slate-800 bg-[#111a30] shadow-sm">
           <div className="flex items-start justify-between gap-3 border-b border-slate-800 px-5 py-4 sm:px-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-400">Adaptive sensing</p>
               <h2 className="mt-1 text-lg font-semibold text-white">Sensor diagnostics</h2>
             </div>
-            <span className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${highPriority ? 'sensing-priority-high bg-amber-400/10 text-amber-300' : 'sensing-priority-normal bg-emerald-400/10 text-emerald-300'}`}>
+            <span className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${highPriority ? 'bg-amber-400/10 text-amber-300' : 'bg-emerald-400/10 text-emerald-300'}`}>
               {sampling.transmission_priority || 'normal'} priority
             </span>
           </div>
@@ -150,7 +150,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
             <DiagnosticRow label="Sampling frequency" value={`Every ${intervalLabel(sampling.interval_s)}`} />
           </div>
           <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <div className="sensing-inset rounded-xl border border-slate-700/70 bg-[#0b1224] p-4">
+            <div className="rounded-xl border border-slate-700/70 bg-[#0b1224] p-4">
               <h3 className="text-sm font-semibold text-slate-200">Why this sampling rate?</h3>
               <ul className="mt-2 space-y-1.5">
                 {(sampling.reasons || []).map((reason) => (
@@ -203,7 +203,7 @@ function HistoricalTelemetry({ data, range, onRangeChange, metrics, latest }) {
   const rangeLabel = RANGES.find((item) => item.hours === range)?.label || '6H'
 
   return (
-    <motion.section {...rise} transition={{ duration: 0.32, delay: 0.17 }} className="sensing-surface rounded-2xl border border-slate-800 bg-[#111a30] p-4 shadow-sm sm:p-5 lg:p-6">
+    <motion.section {...rise} transition={{ duration: 0.32, delay: 0.17 }} className="rounded-2xl border border-slate-800 bg-[#111a30] p-4 shadow-sm sm:p-5 lg:p-6">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-400">Historical telemetry · {siteName(latest.site_id || 'ambatale')}</p>
@@ -216,7 +216,7 @@ function HistoricalTelemetry({ data, range, onRangeChange, metrics, latest }) {
               type="button"
               aria-pressed={range === item.hours}
               onClick={() => onRangeChange(item.hours)}
-              className={`sensing-range-button rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 ${range === item.hours ? 'is-active bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+              className={`rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 ${range === item.hours ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
             >
               {item.label}
             </button>
@@ -238,12 +238,12 @@ function TelemetryChart({ title, unit, metric, data }) {
   const chartData = useMemo(() => data.map((point) => ({ ...point, shortValue: point[metric.dataKey] })), [data, metric.dataKey])
 
   return (
-    <article className="sensing-chart-card min-w-0 rounded-xl border border-slate-800/80 bg-[#080d1d] p-3.5 sm:p-4">
+    <article className="min-w-0 rounded-xl border border-slate-800/80 bg-[#080d1d] p-3.5 sm:p-4">
       <div className="mb-2 flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-slate-300">{title} telemetry</h3>
         <span className={`font-mono text-xs font-semibold ${metric.tint}`}>{metric.value}{unit ? ` ${unit}` : ''}</span>
       </div>
-      <div className="sensing-chart-plot h-36 w-full" role="img" aria-label={`${title} measurements over the selected time period`}>
+      <div className="h-36 min-h-36 w-full" role="img" aria-label={`${title} measurements over the selected time period`}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} margin={{ top: 8, right: 2, bottom: 0, left: -24 }}>
             <CartesianGrid vertical={false} stroke="#1e293b" />
