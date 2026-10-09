@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { getObservations } from '../api'
 import { siteName, useData } from '../components/ui.jsx'
 
-const SITES = ['ambatale', 'biyagama', 'hanwella']
+const SITES = ['ambatale', 'biyagama']
 const RANGES = [
   { label: '1H', hours: 1 },
   { label: '3H', hours: 3 },
@@ -80,24 +80,18 @@ function MonitoringView({ observations, site, onSiteChange }) {
         </div>
       </motion.header>
 
-      <motion.section {...rise} transition={{ duration: 0.3, delay: 0.04 }} aria-label="Monitoring station selection" className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:px-5">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <label className="flex min-w-0 items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-teal-50 text-teal-700">
+      <motion.section {...rise} transition={{ duration: 0.3, delay: 0.04 }} aria-label="Monitoring station selection" className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[0_4px_16px_rgba(15,23,42,0.045)] sm:p-5">
+        <div className="flex flex-wrap items-center justify-between gap-4 sm:gap-6">
+          <div className="flex min-w-0 items-center gap-3.5">
+            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-50 text-teal-700 ring-1 ring-teal-100/80">
               <MetricIcon name="drop" className="size-5" />
             </span>
-            <span className="flex min-w-0 flex-col gap-1">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Selected monitoring station</span>
-              <select
-                value={site}
-                onChange={(event) => onSiteChange(event.target.value)}
-                className="w-full max-w-72 cursor-pointer rounded-lg border-0 bg-transparent p-0 pr-8 text-base font-semibold text-slate-900 outline-none focus:ring-2 focus:ring-teal-500/30 sm:text-lg"
-              >
-                {SITES.map((id) => <option key={id} value={id}>{siteName(id)}</option>)}
-              </select>
+            <span className="flex min-w-0 flex-col gap-1.5">
+              <span id="monitoring-station-label" className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Selected monitoring station</span>
+              <StationDropdown site={site} onChange={onSiteChange} />
             </span>
-          </label>
-          <div className={`inline-flex items-center gap-3 rounded-xl border px-3.5 py-2.5 ${highPriority ? 'border-amber-200 bg-amber-50' : 'border-emerald-200 bg-emerald-50'}`}>
+          </div>
+          <div className={`inline-flex items-center gap-3 rounded-2xl border px-4 py-3 ${highPriority ? 'border-amber-200 bg-amber-50/80' : 'border-emerald-200 bg-emerald-50/80'}`}>
             <span className={`relative grid size-2 place-items-center rounded-full ${highPriority ? 'bg-amber-500' : 'bg-emerald-500'}`}>
               <span className={`absolute size-4 animate-ping rounded-full opacity-20 ${highPriority ? 'bg-amber-500' : 'bg-emerald-500'}`} />
             </span>
@@ -111,7 +105,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
         </div>
       </motion.section>
 
-      <section className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(340px,0.9fr)]">
+      <section className="space-y-5">
         <motion.div {...rise} transition={{ duration: 0.32, delay: 0.08 }}>
           <div className="mb-3 flex flex-wrap items-end justify-between gap-2 px-0.5">
             <div>
@@ -159,16 +153,16 @@ function MonitoringView({ observations, site, onSiteChange }) {
               {sampling.transmission_priority || 'normal'} priority
             </span>
           </div>
-          <div className="px-5 py-2 sm:px-6">
-            <DiagnosticMeter label="Sensor confidence" value={confidence} tone="teal" />
-            <DiagnosticMeter label="Battery level" value={battery} tone={battery < 30 ? 'amber' : 'emerald'} />
-            <DiagnosticRow label="Last observation" value={`${timeLabel(latest.timestamp)} · ${dateLabel(latest.timestamp)}`} />
-            <DiagnosticRow label="Monitoring station" value={siteName(site)} />
-            <DiagnosticRow label="Sensing strategy" value="Context-responsive" valueClass="text-cyan-800" />
-            <DiagnosticRow label="Sampling frequency" value={`Every ${intervalLabel(sampling.interval_s)}`} />
-          </div>
-          <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-            <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-4 sm:p-4.5">
+          <div className="grid gap-4 p-5 sm:p-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.85fr)]">
+            <div className="grid content-start gap-x-8 sm:grid-cols-2">
+              <DiagnosticMeter label="Sensor confidence" value={confidence} tone="teal" />
+              <DiagnosticMeter label="Battery level" value={battery} tone={battery < 30 ? 'amber' : 'emerald'} />
+              <DiagnosticRow label="Last observation" value={`${timeLabel(latest.timestamp)} · ${dateLabel(latest.timestamp)}`} />
+              <DiagnosticRow label="Monitoring station" value={siteName(site)} />
+              <DiagnosticRow label="Sensing strategy" value="Context-responsive" valueClass="text-cyan-800" />
+              <DiagnosticRow label="Sampling frequency" value={`Every ${intervalLabel(sampling.interval_s)}`} />
+            </div>
+            <div className="self-start rounded-xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
               <h3 className="text-sm font-semibold text-slate-800">Why this sampling rate?</h3>
               <ul className="mt-2 space-y-1.5">
                 {(sampling.reasons || []).map((reason) => (
@@ -190,6 +184,124 @@ function MonitoringView({ observations, site, onSiteChange }) {
         <span>Research data for <strong className="font-semibold text-slate-700">{siteName(site)}</strong></span>
         <span>Readings support monitoring and field follow-up; they do not alone confirm water safety.</span>
       </motion.footer>
+    </div>
+  )
+}
+
+function StationDropdown({ site, onChange }) {
+  const [open, setOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(Math.max(0, SITES.indexOf(site)))
+  const rootRef = useRef(null)
+  const triggerRef = useRef(null)
+  const optionRefs = useRef([])
+  const selectedIndex = Math.max(0, SITES.indexOf(site))
+
+  useEffect(() => {
+    if (!open) return undefined
+    const closeOnOutsideClick = (event) => {
+      if (!rootRef.current?.contains(event.target)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', closeOnOutsideClick)
+    return () => document.removeEventListener('pointerdown', closeOnOutsideClick)
+  }, [open])
+
+  useEffect(() => {
+    if (open) optionRefs.current[activeIndex]?.focus()
+  }, [open, activeIndex])
+
+  const openAt = (index = selectedIndex) => {
+    setActiveIndex(index)
+    setOpen(true)
+  }
+  const move = (index) => setActiveIndex((index + SITES.length) % SITES.length)
+  const choose = (id) => {
+    onChange(id)
+    setOpen(false)
+    triggerRef.current?.focus()
+  }
+  const onTriggerKeyDown = (event) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault()
+      openAt(selectedIndex)
+    } else if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault()
+      setOpen((current) => !current)
+      setActiveIndex(selectedIndex)
+    }
+  }
+  const onOptionKeyDown = (event, index) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      move(index + 1)
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      move(index - 1)
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      setActiveIndex(0)
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      setActiveIndex(SITES.length - 1)
+    } else if (event.key === 'Escape') {
+      event.preventDefault()
+      setOpen(false)
+      triggerRef.current?.focus()
+    } else if (event.key === 'Tab') {
+      setOpen(false)
+    }
+  }
+
+  return (
+    <div ref={rootRef} className="relative w-full max-w-72">
+      <button
+        ref={triggerRef}
+        type="button"
+        role="combobox"
+        aria-labelledby="monitoring-station-label"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls="monitoring-station-options"
+        onClick={() => open ? setOpen(false) : openAt()}
+        onKeyDown={onTriggerKeyDown}
+        className={`flex w-full items-center justify-between gap-4 rounded-xl border bg-white px-3.5 py-2 text-left text-base font-semibold text-slate-900 shadow-sm transition sm:text-lg ${open ? 'border-teal-600 ring-4 ring-teal-600/10' : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'} focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-600/15`}
+      >
+        <span>{siteName(site)}</span>
+        <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className={`size-4 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`}>
+          <path d="m5 7.5 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: -4, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.14, ease: 'easeOut' }}
+          className="absolute left-0 top-[calc(100%+8px)] z-30 w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_12px_32px_rgba(15,23,42,0.16)]"
+        >
+          <div id="monitoring-station-options" role="listbox" aria-labelledby="monitoring-station-label">
+            {SITES.map((id, index) => {
+              const selected = site === id
+              const active = activeIndex === index
+              return (
+                <button
+                  key={id}
+                  ref={(element) => { optionRefs.current[index] = element }}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  tabIndex={active ? 0 : -1}
+                  onFocus={() => setActiveIndex(index)}
+                  onClick={() => choose(id)}
+                  onKeyDown={(event) => onOptionKeyDown(event, index)}
+                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${selected ? 'bg-teal-50 text-teal-900' : 'text-slate-700 hover:bg-slate-50'} ${active ? 'outline-none ring-2 ring-inset ring-teal-600/25' : ''}`}
+                >
+                  <span>{siteName(id)}</span>
+                  {selected && <span className="grid size-5 place-items-center rounded-full bg-teal-600 text-white"><svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="size-3.5"><path d="m3.5 8 3 3 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>}
+                </button>
+              )
+            })}
+          </div>
+        </motion.div>
+      )}
     </div>
   )
 }
