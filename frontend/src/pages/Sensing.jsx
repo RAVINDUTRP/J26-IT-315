@@ -61,12 +61,12 @@ function MonitoringView({ observations, site, onSiteChange }) {
   }))
 
   const metrics = [
-    { label: 'pH value', value: readings.ph, unit: '', tint: 'text-emerald-700', soft: 'bg-emerald-50', icon: 'drop', bar: '#10b981', dataKey: 'ph', dataLabel: 'pH' },
-    { label: 'Turbidity', value: readings.turbidity_ntu, unit: 'NTU', tint: 'text-amber-700', soft: 'bg-amber-50', icon: 'turbidity', bar: '#f59e0b', dataKey: 'turbidity', dataLabel: 'Turbidity', note: 'Suspended particles' },
-    { label: 'Total dissolved solids', value: readings.tds_ppm, unit: 'ppm', tint: 'text-cyan-700', soft: 'bg-cyan-50', icon: 'tds', bar: '#06b6d4', dataKey: 'tds', dataLabel: 'TDS' },
-    { label: 'Conductivity', value: readings.ec_us_cm, unit: 'µS/cm', tint: 'text-sky-700', soft: 'bg-sky-50', icon: 'conductivity' },
-    { label: 'Water temperature', value: readings.temp_c, unit: '°C', tint: 'text-violet-700', soft: 'bg-violet-50', icon: 'temperature' },
-    { label: 'Rainfall context', value: latest.rainfall_mm_h, unit: 'mm/h', tint: 'text-blue-700', soft: 'bg-blue-50', icon: 'rain' },
+    { label: 'pH value', value: readings.ph, unit: '', tint: 'text-emerald-800', soft: 'bg-emerald-100/80', cardBg: 'bg-emerald-50', cardBorder: 'border-emerald-100', icon: 'drop', bar: '#10b981', dataKey: 'ph', dataLabel: 'pH' },
+    { label: 'Turbidity', value: readings.turbidity_ntu, unit: 'NTU', tint: 'text-amber-800', soft: 'bg-amber-100/80', cardBg: 'bg-amber-50', cardBorder: 'border-amber-100', icon: 'turbidity', bar: '#f59e0b', dataKey: 'turbidity', dataLabel: 'Turbidity', note: 'Suspended particles' },
+    { label: 'Total dissolved solids', value: readings.tds_ppm, unit: 'ppm', tint: 'text-cyan-800', soft: 'bg-cyan-100/80', cardBg: 'bg-cyan-50', cardBorder: 'border-cyan-100', icon: 'tds', bar: '#06b6d4', dataKey: 'tds', dataLabel: 'TDS' },
+    { label: 'Conductivity', value: readings.ec_us_cm, unit: 'µS/cm', tint: 'text-violet-800', soft: 'bg-violet-100/80', cardBg: 'bg-violet-50', cardBorder: 'border-violet-100', icon: 'conductivity' },
+    { label: 'Water temperature', value: readings.temp_c, unit: '°C', tint: 'text-rose-800', soft: 'bg-rose-100/80', cardBg: 'bg-rose-50', cardBorder: 'border-rose-100', icon: 'temperature' },
+    { label: 'Rainfall context', value: latest.rainfall_mm_h, unit: 'mm/h', tint: 'text-blue-800', soft: 'bg-blue-100/80', cardBg: 'bg-blue-50', cardBorder: 'border-blue-100', icon: 'rain' },
   ]
 
   return (
@@ -130,15 +130,15 @@ function MonitoringView({ observations, site, onSiteChange }) {
                 {...rise}
                 transition={{ duration: 0.28, delay: index * 0.04 }}
                 whileHover={{ y: -3, boxShadow: '0 12px 24px rgba(15, 23, 42, 0.08)' }}
-                className="min-h-36 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[0_2px_8px_rgba(15,23,42,0.035)] transition-colors hover:border-slate-300 sm:p-5"
+                className={`min-h-36 rounded-2xl border ${metric.cardBorder} ${metric.cardBg} p-4 shadow-[0_2px_8px_rgba(15,23,42,0.035)] transition-shadow hover:shadow-md sm:p-5`}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-medium text-slate-600">{metric.label}</p>
+                  <p className="text-sm font-semibold text-slate-600">{metric.label}</p>
                   <span className={`grid size-9 shrink-0 place-items-center rounded-xl ${metric.soft} ${metric.tint}`}>
                     <MetricIcon name={metric.icon} className="size-5" />
                   </span>
                 </div>
-                <p className="mt-3 flex flex-wrap items-baseline gap-x-1.5 font-mono text-2xl font-semibold tracking-tight text-slate-950 tabular-nums sm:text-[30px]">
+                <p className={`relative mt-3 flex flex-wrap items-baseline gap-x-1.5 font-mono text-2xl font-semibold tracking-tight tabular-nums sm:text-[30px] ${metric.tint}`}>
                   <span>{metric.value}</span>
                   {metric.unit && <span className="text-sm font-medium text-slate-500">{metric.unit}</span>}
                 </p>
