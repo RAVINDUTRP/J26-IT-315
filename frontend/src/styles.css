@@ -86,3 +86,15 @@ tr:last-child td { border-bottom: 0; }
   .two, .two.tight { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Keep the telemetry dashboard readable even while dev CSS is refreshing. */
+.sensing-page { background-color: #080d1d; color: #f1f5f9; }
+.sensing-page .sensing-surface { background-color: #111a30; border-color: #263248; }
+.sensing-page .sensing-inset,
+.sensing-page .sensing-chart-card { background-color: #080d1d; border-color: #263248; }
+.sensing-page .sensing-chart-plot { height: 9rem; min-height: 9rem; }
+.sensing-page .sensing-priority-normal { background-color: rgb(16 185 129 / 12%); color: #6ee7b7; border-color: rgb(16 185 129 / 35%); }
+.sensing-page .sensing-priority-high { background-color: rgb(245 158 11 / 12%); color: #fcd34d; border-color: rgb(245 158 11 / 35%); }
+.sensing-page .sensing-select { background-color: #111a30; color: #f8fafc; }
+.sensing-page .sensing-select option { background-color: #111a30; color: #f8fafc; }
+.sensing-page .sensing-range-button.is-active { background-color: #3b82f6; color: #fff; }
