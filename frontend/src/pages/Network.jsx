@@ -35,7 +35,7 @@ export default function Network() {
         {metrics.map((metric, index) => (
           <motion.article key={metric.label} {...enter} transition={{ duration: 0.28, delay: index * 0.05 }} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <p className="text-sm font-medium text-slate-500">{metric.label}</p>
-            <p className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">{metric.value}<span className="ml-1 text-base font-medium text-slate-500">{metric.unit}</span></p>
+            <p className="metric-value mt-2">{metric.value}<span className="ml-1 text-base font-medium text-slate-500">{metric.unit}</span></p>
           </motion.article>
         ))}
       </section>
@@ -86,8 +86,8 @@ export default function Network() {
                           <span className="block h-full rounded-full" style={{ width: `${node.health * 100}%`, backgroundColor: nodeColor(node.health) }} />
                         </span>
                       </td>
-                      <td className="px-2 py-3 text-slate-700">{node.battery}%</td>
-                      <td className="px-2 py-3 text-slate-700">{node.rssi} dBm</td>
+                      <td className="px-2 py-3 tabular-nums text-slate-700">{node.battery}%</td>
+                      <td className="px-2 py-3 tabular-nums text-slate-700">{node.rssi} dBm</td>
                     </tr>
                   ))}
                 </tbody>

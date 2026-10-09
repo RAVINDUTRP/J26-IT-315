@@ -68,7 +68,7 @@ export default function Dashboard() {
               <p className="text-sm font-medium text-slate-600">{metric.label}</p>
               <span className={`mt-0.5 size-2.5 rounded-full ${toneDot[metric.tone]}`} />
             </div>
-            <p className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">{metric.value}</p>
+            <p className="metric-value mt-3">{metric.value}</p>
             <p className="mt-1 text-xs text-slate-500">{metric.detail}</p>
           </motion.article>
         ))}
@@ -87,7 +87,7 @@ export default function Dashboard() {
             { to: '/decision', number: '04', title: 'Decision support', detail: 'Ranked response actions', color: 'border-rose-200 bg-rose-50 text-rose-800' },
           ].map((step) => (
             <Link key={step.number} to={step.to} className={`group flex items-center gap-3 rounded-xl border p-3 transition hover:-translate-y-0.5 hover:shadow-sm ${step.color}`}>
-              <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-white/80 font-mono text-xs font-bold">{step.number}</span>
+              <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-white/80 text-xs font-bold tabular-nums">{step.number}</span>
               <span className="min-w-0">
                 <span className="block text-sm font-semibold">{step.title}</span>
                 <span className="block text-xs opacity-75">{step.detail}</span>
@@ -124,7 +124,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="sm:max-w-52 sm:text-right">
-                    <p className="text-2xl font-semibold tracking-tight text-slate-900">{Math.round(assessment.risk_score * 100)}<span className="text-base font-medium text-slate-400">%</span></p>
+                    <p className="text-2xl font-semibold tracking-tight tabular-nums text-slate-950">{Math.round(assessment.risk_score * 100)}<span className="text-base font-medium text-slate-400">%</span></p>
                     <p className="text-xs text-slate-500">6-hour risk estimate</p>
                     <p className="mt-2 text-xs font-medium text-slate-700">{recommendation.actions[0].action}</p>
                   </div>
@@ -168,7 +168,7 @@ export default function Dashboard() {
             </div>
             <div className="mt-4 flex items-end justify-between gap-3">
               <div>
-                <p className="text-3xl font-semibold tracking-tight text-slate-950">{net.pdr_percent}<span className="text-base font-medium text-slate-400">%</span></p>
+                <p className="metric-value">{net.pdr_percent}<span className="text-base font-medium text-slate-400">%</span></p>
                 <p className="text-xs text-slate-500">Packet delivery ratio</p>
               </div>
               <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-800">{net.nodes.length - predictedFailures} healthy · {predictedFailures} at risk</span>
@@ -190,7 +190,7 @@ export default function Dashboard() {
               <p className="mt-1 text-xs text-slate-500">Recent observations · NTU</p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-semibold text-slate-950">{latest.readings.turbidity_ntu}<span className="ml-1 text-sm font-medium text-slate-500">NTU</span></p>
+              <p className="metric-value">{latest.readings.turbidity_ntu}<span className="ml-1 text-sm font-medium text-slate-500">NTU</span></p>
               <p className="text-xs text-slate-500">Latest reading</p>
             </div>
           </div>

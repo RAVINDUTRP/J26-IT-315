@@ -74,16 +74,16 @@ function MonitoringView({ observations, site, onSiteChange }) {
       <motion.header {...rise} transition={{ duration: 0.32, ease: 'easeOut' }} className="flex flex-wrap items-center justify-between gap-5 border-b border-slate-200 pb-5 sm:pb-6">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">AquaShield · field telemetry</p>
-          <h1 className="mt-1 font-sans text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Water Quality Monitoring</h1>
+          <h1 className="mt-1 font-sans text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Water Quality Monitoring</h1>
           <p className="mt-1 text-sm text-slate-600 sm:text-base">Sensor readings and adaptive sampling for Kelani Basin monitoring sites.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3 sm:gap-5">
-          <span className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 font-mono text-xs font-semibold uppercase tracking-wide ${highPriority ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>
+          <span className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold uppercase tracking-wide ${highPriority ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>
             <span className={`size-2 rounded-full ${highPriority ? 'bg-amber-500' : 'bg-emerald-500'}`} />
             {highPriority ? 'Elevated sampling' : 'Nominal sensing'}
           </span>
-          <div className="text-right font-mono">
-            <p className="text-sm font-semibold text-slate-800">{timeLabel(latest.timestamp)}</p>
+          <div className="text-right">
+            <p className="text-sm font-semibold tabular-nums text-slate-800">{timeLabel(latest.timestamp)}</p>
             <p className="mt-0.5 text-[11px] uppercase tracking-wider text-slate-500">{dateLabel(latest.timestamp)} · local time</p>
           </div>
         </div>
@@ -138,7 +138,7 @@ function MonitoringView({ observations, site, onSiteChange }) {
                     <MetricIcon name={metric.icon} className="size-5" />
                   </span>
                 </div>
-                <p className={`relative mt-3 flex flex-wrap items-baseline gap-x-1.5 font-mono text-2xl font-semibold tracking-tight tabular-nums sm:text-[30px] ${metric.tint}`}>
+                <p className="metric-value relative mt-3 flex flex-wrap items-baseline gap-x-1.5">
                   <span>{metric.value}</span>
                   {metric.unit && <span className="text-sm font-medium text-slate-500">{metric.unit}</span>}
                 </p>
@@ -201,7 +201,7 @@ function DiagnosticRow({ label, value, valueClass = 'text-slate-800' }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-slate-100 py-3 last:border-b-0">
       <span className="text-sm text-slate-600">{label}</span>
-      <span className={`text-right font-mono text-sm font-semibold ${valueClass}`}>{value}</span>
+      <span className={`text-right font-semibold tabular-nums ${valueClass}`}>{value}</span>
     </div>
   )
 }
@@ -218,7 +218,7 @@ function DiagnosticMeter({ label, value, tone }) {
     <div className="border-b border-slate-100 py-3 last:border-b-0">
       <div className="flex items-center justify-between gap-4">
         <span className="text-sm text-slate-600">{label}</span>
-        <span className={`font-mono text-sm font-semibold tabular-nums ${color.text}`}>{value}%</span>
+        <span className={`text-sm font-semibold tabular-nums ${color.text}`}>{value}%</span>
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={value}>
         <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(100, Math.max(0, value))}%` }} transition={{ duration: 0.7, ease: 'easeOut' }} className={`h-full rounded-full ${color.bar}`} />
@@ -252,7 +252,7 @@ function HistoricalTelemetry({ data, range, onRangeChange, metrics, latest }) {
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-700">Historical telemetry · {siteName(latest.site_id || 'ambatale')}</p>
-          <h2 className="mt-1 text-lg font-semibold text-slate-900 sm:text-xl">Sensor trends <span className="font-mono text-sm font-medium text-slate-500">({rangeLabel} span)</span></h2>
+          <h2 className="mt-1 text-lg font-semibold text-slate-900 sm:text-xl">Sensor trends <span className="text-sm font-medium tabular-nums text-slate-500">({rangeLabel} span)</span></h2>
         </div>
         <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1" aria-label="Chart time range">
           {RANGES.map((item) => (
@@ -261,7 +261,7 @@ function HistoricalTelemetry({ data, range, onRangeChange, metrics, latest }) {
               type="button"
               aria-pressed={range === item.hours}
               onClick={() => onRangeChange(item.hours)}
-              className={`rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 ${range === item.hours ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:bg-white hover:text-slate-900'}`}
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold tabular-nums transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 ${range === item.hours ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:bg-white hover:text-slate-900'}`}
             >
               {item.label}
             </button>
@@ -286,7 +286,7 @@ function TelemetryChart({ title, unit, metric, data }) {
     <article className="min-w-0 rounded-xl border border-slate-200 bg-slate-50 p-3.5 sm:p-4">
       <div className="mb-2 flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-slate-700">{title} telemetry</h3>
-        <span className={`font-mono text-xs font-semibold ${metric.tint}`}>{metric.value}{unit ? ` ${unit}` : ''}</span>
+        <span className="text-xs font-semibold tabular-nums text-slate-800">{metric.value}{unit ? ` ${unit}` : ''}</span>
       </div>
       <div className="h-36 min-h-36 w-full" role="img" aria-label={`${title} measurements over the selected time period`}>
         <ResponsiveContainer width="100%" height="100%">

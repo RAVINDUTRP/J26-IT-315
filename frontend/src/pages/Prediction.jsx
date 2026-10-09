@@ -31,7 +31,7 @@ export default function Prediction() {
 
               <div className="mt-5 grid items-center gap-6 lg:grid-cols-[minmax(220px,0.7fr)_minmax(0,1.3fr)]">
                 <div>
-                  <p className="text-4xl font-semibold tracking-tight text-slate-950">{Math.round(assessment.risk_score * 100)}<span className="text-2xl">%</span></p>
+                  <p className="metric-value">{Math.round(assessment.risk_score * 100)}<span className="text-2xl">%</span></p>
                   <p className="mt-1 text-sm text-slate-500">Risk score · model confidence {Math.round(assessment.confidence * 100)}%</p>
                   <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-slate-100" role="img" aria-label={`Risk score ${Math.round(assessment.risk_score * 100)} percent`}>
                     <div className={`h-full rounded-full ${riskColor[assessment.risk_category] || 'bg-slate-500'}`} style={{ width: `${assessment.risk_score * 100}%` }} />
