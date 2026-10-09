@@ -74,9 +74,14 @@ export default function App() {
             </motion.div>
           ))}
         </nav>
-        <div className="mt-auto flex items-center gap-2.5 px-1.5 pt-3.5 text-xs text-[#7f8da4] max-lg:mt-0 max-lg:pt-0">
-          <span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgb(11_200_149_/_12%)]" />
-          Demo system online
+        <div className="mt-auto rounded-xl border border-[#202c41] bg-[#0d1628] px-3.5 py-3 max-lg:mt-0">
+          <div className="flex items-center gap-3">
+            <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgb(11_200_149_/_12%)]" />
+            <span className="min-w-0">
+              <span className="block text-xs font-semibold text-[#dbe5f2]">Kelani Basin monitoring</span>
+              <span className="mt-0.5 block text-[11px] text-[#8291a8]">AquaShield research workspace</span>
+            </span>
+          </div>
         </div>
         </motion.aside>
         <main className="min-w-0 max-w-[1180px] px-10 pt-9 pb-[60px] max-[900px]:max-w-none max-[900px]:px-[18px] max-[900px]:pt-6 max-[900px]:pb-12">
