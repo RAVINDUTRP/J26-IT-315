@@ -23,7 +23,7 @@ export default function Decision() {
               <div className="flex flex-wrap items-center gap-3">
                 <span className="grid size-9 shrink-0 place-items-center rounded-full bg-slate-900 text-sm font-semibold text-white">{recommendation.rank}</span>
                 <h2 className="text-lg font-semibold text-slate-900">{siteName(recommendation.site_id)}</h2>
-                <span className="text-sm text-slate-500">{recommendation.population_exposed.toLocaleString()} people served</span>
+                <span className="text-sm tabular-nums text-slate-500">{recommendation.population_exposed.toLocaleString()} people served</span>
                 <Pill level={recommendation.communication_status}>{`Link ${recommendation.communication_status}`}</Pill>
               </div>
 
@@ -56,7 +56,7 @@ export default function Decision() {
                         <span className="h-2 overflow-hidden rounded-full bg-slate-200" role="img" aria-label={`${factor.name} weight ${Math.round(factor.weight * 100)} percent`}>
                           <span className="block h-full rounded-full bg-blue-600" style={{ width: `${Math.min(100, factor.weight * 100 * 1.6)}%` }} />
                         </span>
-                        <span className="text-right font-semibold text-slate-700">{Math.round(factor.weight * 100)}%</span>
+                        <span className="text-right font-semibold tabular-nums text-slate-700">{Math.round(factor.weight * 100)}%</span>
                       </div>
                     ))}
                   </div>

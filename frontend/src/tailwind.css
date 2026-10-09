@@ -4,3 +4,13 @@
   --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Spectral", ui-serif, Georgia, serif;
 }
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+@utility metric-value {
+  @apply font-sans text-3xl font-semibold tracking-tight tabular-nums text-slate-950;
+}

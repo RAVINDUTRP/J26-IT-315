@@ -45,11 +45,11 @@ export default function AdaptiveSensing() {
       <motion.header {...rise} transition={{ duration: 0.3 }} className="flex flex-wrap items-start justify-between gap-5 border-b border-slate-200 pb-5 sm:pb-6">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">AquaShield · field intelligence</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Adaptive sensing</h1>
+          <h1 className="mt-1 font-sans text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Adaptive sensing</h1>
           <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">See how current rainfall, sensor health, and water readings shape the monitoring schedule at each site.</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-right shadow-sm">
-          <p className="font-mono text-sm font-semibold text-slate-800">{timeLabel(latest.timestamp)}</p>
+          <p className="text-sm font-semibold tabular-nums text-slate-800">{timeLabel(latest.timestamp)}</p>
           <p className="mt-0.5 text-[11px] uppercase tracking-wider text-slate-500">{dateLabel(latest.timestamp)} · local time</p>
         </div>
       </motion.header>
@@ -79,7 +79,7 @@ export default function AdaptiveSensing() {
             <p className="text-xs text-slate-600">{(sampling.reasons || []).join(' · ') || 'No schedule explanation was reported.'}</p>
           </div>
         </div>
-        <span className={`rounded-lg px-3 py-1.5 font-mono text-xs font-semibold uppercase ${highPriority ? 'bg-amber-100 text-amber-800' : 'bg-teal-100 text-teal-800'}`}>{sampling.transmission_priority || 'normal'} priority</span>
+        <span className={`rounded-lg px-3 py-1.5 text-xs font-semibold uppercase ${highPriority ? 'bg-amber-100 text-amber-800' : 'bg-teal-100 text-teal-800'}`}>{sampling.transmission_priority || 'normal'} priority</span>
       </motion.div>
 
       <section aria-labelledby="adaptive-factors-title">
@@ -94,7 +94,7 @@ export default function AdaptiveSensing() {
                 <p className="text-sm font-medium text-slate-600">{factor.label}</p>
                 <span className={`grid size-9 place-items-center rounded-xl ${factor.soft} ${factor.tint}`}><MetricIcon name={factor.icon} /></span>
               </div>
-              <p className={`mt-4 font-mono text-xl font-semibold tracking-tight tabular-nums ${factor.tint}`}>{factor.value}</p>
+              <p className="metric-value mt-4">{factor.value}</p>
               <p className="mt-1 min-h-5 text-xs leading-5 text-slate-500">{factor.detail}</p>
             </motion.article>
           ))}
@@ -108,7 +108,7 @@ export default function AdaptiveSensing() {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-700">Schedule configuration</p>
               <h2 id="priority-table-title" className="mt-1 text-lg font-semibold text-slate-900">Parameter monitoring priorities</h2>
             </div>
-            <span className="rounded-lg bg-slate-100 px-3 py-1.5 font-mono text-xs font-semibold text-slate-700">Every {interval}</span>
+            <span className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold tabular-nums text-slate-700">Every {interval}</span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] text-left text-sm">
@@ -120,7 +120,7 @@ export default function AdaptiveSensing() {
                   const isPriority = prioritySet.has(item.id)
                   return <tr key={item.id} className="transition-colors hover:bg-slate-50/70">
                     <th scope="row" className="px-4 py-3.5 font-medium text-slate-800 sm:px-5">{item.name}</th>
-                    <td className="px-4 py-3.5 font-mono font-semibold tabular-nums text-slate-800">{item.value}{item.unit && <span className="ml-1 text-xs font-medium text-slate-500">{item.unit}</span>}</td>
+                    <td className="px-4 py-3.5 font-semibold tabular-nums text-slate-950">{item.value}{item.unit && <span className="ml-1 text-xs font-medium text-slate-500">{item.unit}</span>}</td>
                     <td className="px-4 py-3.5 sm:px-5"><span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${isPriority ? 'bg-amber-50 text-amber-800' : 'bg-slate-100 text-slate-600'}`}><span className={`size-1.5 rounded-full ${isPriority ? 'bg-amber-500' : 'bg-slate-400'}`} />{isPriority ? 'Priority' : 'Routine'}</span></td>
                   </tr>
                 })}
@@ -140,7 +140,7 @@ export default function AdaptiveSensing() {
             </ul>
             <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
               <p className="text-xs font-medium text-slate-500">Current interval</p>
-              <p className="mt-1 font-mono text-2xl font-semibold tracking-tight text-slate-900">{interval}</p>
+              <p className="metric-value mt-1">{interval}</p>
             </div>
           </motion.section>
           <motion.section {...rise} transition={{ duration: 0.3, delay: 0.2 }} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -161,7 +161,7 @@ export default function AdaptiveSensing() {
 function ReadinessMeter({ label, value, tone = 'teal' }) {
   const colors = { teal: 'bg-teal-600', emerald: 'bg-emerald-500', amber: 'bg-amber-500' }
   return <div>
-    <div className="mb-2 flex items-center justify-between gap-3"><span className="text-sm text-slate-600">{label}</span><span className="font-mono text-sm font-semibold tabular-nums text-slate-800">{value}%</span></div>
+    <div className="mb-2 flex items-center justify-between gap-3"><span className="text-sm text-slate-600">{label}</span><span className="text-sm font-semibold tabular-nums text-slate-800">{value}%</span></div>
     <div className="h-2 overflow-hidden rounded-full bg-slate-100" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={value}><motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(100, Math.max(0, value))}%` }} transition={{ duration: 0.6 }} className={`h-full rounded-full ${colors[tone]}`} /></div>
   </div>
 }
