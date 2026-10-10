@@ -3,6 +3,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { MotionConfig, motion } from 'framer-motion'
 
 const Dashboard = lazy(() => import('./pages/dashboard.jsx'))
+const SystemOverview = lazy(() => import('./pages/SystemOverview.jsx'))
 const Sensing = lazy(() => import('./pages/Sensing.jsx'))
 const Network = lazy(() => import('./pages/Network.jsx'))
 const Prediction = lazy(() => import('./pages/Prediction.jsx'))
@@ -16,7 +17,7 @@ const NAV_ITEMS = [
   { to: '/prediction', label: 'AI Prediction', icon: 'brain' },
   { to: '/decision', label: 'Disaster Decision Support', icon: 'shield', badge: '3 Alerts' },
   { to: '/decision?view=alerts', label: 'Alerts', icon: 'bell' },
-  { to: '/?view=system', label: 'System Overview', icon: 'database' },
+  { to: '/system', label: 'System Overview', icon: 'database' },
 ]
 
 export default function App() {
@@ -85,9 +86,10 @@ export default function App() {
         </div>
         </motion.aside>
         <main className="min-w-0 max-w-[1180px] px-10 pt-9 pb-[60px] max-[900px]:max-w-none max-[900px]:px-[18px] max-[900px]:pt-6 max-[900px]:pb-12">
-          <Suspense fallback={<div className="grid min-h-64 place-items-center text-sm text-slate-400" role="status">Loading dashboard…</div>}>
+          <Suspense fallback={<div className="grid min-h-64 place-items-center text-sm text-slate-400" role="status">Loading page…</div>}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/system" element={<SystemOverview />} />
               <Route path="/sensing" element={<Sensing />} />
               <Route path="/network" element={<Network />} />
               <Route path="/prediction" element={<Prediction />} />
