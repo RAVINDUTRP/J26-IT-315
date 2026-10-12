@@ -34,6 +34,7 @@ export default function Network() {
   const byId = Object.fromEntries(net.nodes.map((n) => [n.id, n]))
   const failing = net.nodes.filter((n) => n.predicted_failure >= 0.65)
   const ranked = net.routing?.ranked_paths || []
+  
   const failedCount = net.nodes.filter(
   (n) => n.status === 'failed'
 ).length
@@ -120,6 +121,120 @@ const healthyCount = net.nodes.filter(
     <strong style={{ color: '#b1362e' }}>{failedCount}</strong>
     <span className="muted small">Nodes currently failed</span>
   </div>
+</div>
+
+      
+<div className="two">
+  <Panel
+    title="Network Recovery Diagnostics"
+    note="Live diagnostics calculated from the current network response."
+  >
+    <div className="tiles">
+      <div className="tile">
+        <span className="muted small">Network Status</span>
+        <strong
+          style={{
+            color: failedNodes.length ? '#b1362e' : '#2f7d5c',
+            fontSize: '18px',
+          }}
+        >
+          {recoveryStatus}
+        </strong>
+      </div>
+
+      <div className="tile">
+        <span className="muted small">Healthy Nodes</span>
+        <strong style={{ color: '#2f7d5c' }}>
+          {healthyNodes.length}
+        </strong>
+      </div>
+
+      <div className="tile">
+        <span className="muted small">Failed Nodes</span>
+        <strong style={{ color: '#b1362e' }}>
+          {failedNodes.length}
+        </strong>
+      </div>
+
+      <div className="tile">
+        <span className="muted small">High-Risk Nodes</span>
+        <strong style={{ color: '#c58a2c' }}>
+          {riskyNodes.length}
+        </strong>
+      </div>
+
+      <div className="tile">
+        <span className="muted small">Active Route Hops</span>
+        <strong>{activeHops}</strong>
+      </div>
+    </div>
+
+    <div style={{ marginTop: '20px' }}>
+      <h3>Recovery Assessment</h3>
+
+      <p className="muted small">
+        {failedNodes.length > 0
+          ? `Failed nodes: ${failedNodes.map((n) => n.id).join(', ')}. Check whether the active route avoids unavailable nodes.`
+          : 'No failed nodes are reported by the current network response.'}
+      </p>
+
+      <p className="muted small">
+        {pathChanged
+          ? 'The active route differs from the previous route.'
+          : 'No route change is confirmed by the current path data.'}
+      </p>
+
+      <p className="small">
+        <strong>Active path:</strong>{' '}
+        {activePath.length ? activePath.join(' → ') : 'Not available'}
+      </p>
+
+      <p className="small">
+        <strong>Previous path:</strong>{' '}
+        {previousPath.length
+          ? previousPath.join(' → ')
+          : 'No previous path available'}
+      </p>
+    </div>
+  </Panel>
+
+  <Panel
+    title="Node Risk Assessment"
+    note="Nodes requiring attention based on the current response."
+  >
+    {riskyNodes.length === 0 ? (
+      <p className="muted small">
+        No high-risk nodes are currently reported.
+      </p>
+    ) : (
+      <table>
+        <thead>
+          <tr>
+            <th>Node</th>
+            <th>Risk</th>
+            <th>Health</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {riskyNodes.map((n) => (
+            <tr key={n.id}>
+              <td><strong>{n.id}</strong></td>
+              <td>
+                {Math.round((n.failure_risk || 0) * 100)}%
+              </td>
+              <td>{Math.round(n.health * 100)}%</td>
+              <td>
+                <span className="pill pill-lost">
+                  Monitor
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </Panel>
 </div>
 
       <div className="two">
