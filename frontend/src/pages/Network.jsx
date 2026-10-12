@@ -48,7 +48,20 @@ const healthyCount = net.nodes.filter(
 ).length
   const activePath = net.active_path || []
   const previousPath = net.previous_path || []
-
+  const failedNodes = net.nodes.filter((n) => n.status === 'failed')
+  const healthyNodes = net.nodes.filter(
+    (n) => n.health > 0.75 && n.status !== 'failed'
+  )
+  const riskyNodes = net.nodes.filter(
+    (n) => n.predicted_failure >= 0.65 && n.status !== 'failed'
+  ) 
+  const recoveryStatus = failedNodes.length > 0 ? 'Degraded' 
+: 'Healthy'
+  const activeHops = activePath.length > 0 ? activePath.length - 1 : 0
+  const pathChanged =
+    activePath.length > 0 &&
+    previousPath.length > 0 &&
+    activePath.join(',') !== previousPath.join(',')
   const simulateFailure = () => {
     setFailedNode(failedNode ? '' : 'R4')
   }
