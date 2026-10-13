@@ -147,6 +147,78 @@ def main():
         font-size: .78rem;
         margin: .65rem .2rem 1rem;
     }
+    .dashboard-heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 1.25rem 0 1rem;
+    }
+    .dashboard-kicker {
+        color: var(--aqua);
+        font-size: .72rem;
+        font-weight: 800;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+    .dashboard-title {
+        color: var(--ink);
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -.04em;
+        margin-top: .2rem;
+    }
+    .dashboard-badge {
+        border: 1px solid rgba(14, 165, 168, .22);
+        border-radius: 999px;
+        color: #087f87;
+        background: rgba(14, 165, 168, .09);
+        font-size: .75rem;
+        font-weight: 700;
+        padding: .38rem .75rem;
+        white-space: nowrap;
+    }
+    .metric-card {
+        min-height: 7.1rem;
+        padding: 1rem 1.05rem;
+        border: 1px solid rgba(37, 99, 235, .12);
+        border-radius: 1rem;
+        background: linear-gradient(145deg, rgba(255,255,255,.97), rgba(242,249,253,.9));
+        box-shadow: 0 8px 22px rgba(15, 23, 42, .06);
+    }
+    .metric-label {
+        color: var(--muted);
+        font-size: .76rem;
+        font-weight: 650;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+    }
+    .metric-value {
+        color: var(--ink);
+        font-size: 1.65rem;
+        font-weight: 800;
+        margin-top: .55rem;
+    }
+    .metric-note {
+        color: #8391a2;
+        font-size: .72rem;
+        margin-top: .12rem;
+    }
+    .section-heading {
+        color: var(--ink);
+        font-size: 1.08rem;
+        font-weight: 750;
+        margin: 1.35rem 0 .55rem;
+    }
+    .observation-note {
+        border-left: 4px solid #d4a72c;
+        border-radius: .75rem;
+        padding: .85rem 1rem;
+        color: #6d5815;
+        background: #fff9df;
+        font-size: .84rem;
+        margin: .9rem 0 1rem;
+    }
     @media (max-width: 800px) {
         .app-nav { align-items: flex-start; }
         .app-nav-subtitle { max-width: 15rem; }
@@ -202,14 +274,49 @@ def current_features():
 
 def dashboard():
     df = st.session_state.data
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Water-quality records", len(df))
-    c2.metric("Locations", df["location_id"].nunique())
-    c3.metric("Latest rainfall (mm)", f"{float(df['rainfall_mm'].iloc[-1]):.1f}")
-    st.subheader("Latest observed measurements")
-    st.dataframe(df.tail(1), use_container_width=True)
-    st.warning("Observed measurements above are not future predictions.")
-    st.line_chart(df.set_index("timestamp")[["turbidity", "rainfall_mm"]])
+    latest = df.iloc[-1]
+    st.markdown("""
+    <div class="dashboard-heading">
+        <div>
+            <div class="dashboard-kicker">Monitoring dashboard</div>
+            <div class="dashboard-title">Water quality overview</div>
+        </div>
+        <div class="dashboard-badge">● Synthetic demonstration</div>
+    </div>
+    """, unsafe_allow_html=True)
+    c1, c2, c3, c4 = st.columns(4)
+    cards = [
+        ("Water-quality records", f"{len(df):,}", "observations loaded"),
+        ("Monitoring locations", f"{df['location_id'].nunique():,}", "active locations"),
+        ("Latest rainfall", f"{float(latest['rainfall_mm']):.1f} mm", "most recent reading"),
+        ("Sensor confidence", f"{float(latest.get('sensor_confidence', 0)):.0%}", "latest reported value"),
+    ]
+    for column, (label, value, note) in zip((c1, c2, c3, c4), cards):
+        column.markdown(
+            f'<div class="metric-card"><div class="metric-label">{label}</div>'
+            f'<div class="metric-value">{value}</div><div class="metric-note">{note}</div></div>',
+            unsafe_allow_html=True,
+        )
+    st.markdown('<div class="section-heading">Latest observed measurements</div>', unsafe_allow_html=True)
+    measurement_columns = [
+        column for column in (
+            "timestamp", "location_id", "pH", "turbidity",
+            "electrical_conductivity", "TDS", "water_temperature", "rainfall_mm",
+            "sensor_confidence",
+        ) if column in df
+    ]
+    latest_table = df[measurement_columns].tail(1).copy()
+    st.dataframe(latest_table, hide_index=True, use_container_width=True)
+    st.markdown(
+        '<div class="observation-note"><strong>Observed data only.</strong> '
+        'These measurements describe the latest recorded conditions and are not future predictions.</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown('<div class="section-heading">Observed conditions trend</div>', unsafe_allow_html=True)
+    chart_data = df.set_index("timestamp")[["rainfall_mm", "turbidity"]].rename(
+        columns={"rainfall_mm": "Rainfall (mm)", "turbidity": "Turbidity"}
+    )
+    st.line_chart(chart_data, height=360, use_container_width=True)
 
 
 def upload():
