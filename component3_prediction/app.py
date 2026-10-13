@@ -40,48 +40,126 @@ def main():
     st.set_page_config(page_title="AquaShield C03", layout="wide")
     st.markdown("""
     <style>
+    :root {
+        --aqua: #079aa5;
+        --blue: #2563eb;
+        --ink: #16324f;
+        --muted: #718096;
+    }
     .app-nav {
+        position: relative;
         display: flex;
         align-items: center;
-        gap: 0.7rem;
-        padding: 0.65rem 0 0.9rem;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.25);
-        margin-bottom: 1.2rem;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.95rem 1.1rem;
+        border: 1px solid rgba(37, 99, 235, 0.12);
+        border-radius: 1.1rem;
+        background: linear-gradient(110deg, rgba(255,255,255,.96), rgba(239,250,252,.9));
+        box-shadow: 0 10px 28px rgba(37, 99, 235, .08);
+        margin-bottom: 0.8rem;
+        overflow: hidden;
+    }
+    .app-nav::after {
+        content: "";
+        position: absolute;
+        width: 12rem;
+        height: 12rem;
+        right: -5rem;
+        top: -8rem;
+        border-radius: 50%;
+        background: rgba(14, 165, 168, .12);
+    }
+    .app-nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        z-index: 1;
     }
     .app-nav-mark {
         display: grid;
         place-items: center;
-        width: 2.25rem;
-        height: 2.25rem;
-        border-radius: 0.7rem;
-        background: linear-gradient(135deg, #0ea5a8, #2563eb);
+        width: 2.65rem;
+        height: 2.65rem;
+        border-radius: 0.85rem;
+        background: linear-gradient(135deg, var(--aqua), var(--blue));
         color: white;
-        font-size: 1.15rem;
-        font-weight: 800;
+        font-size: 1.3rem;
+        font-weight: 850;
+        box-shadow: 0 7px 16px rgba(37, 99, 235, .24);
     }
-    .app-nav-title { font-size: 1.2rem; font-weight: 750; line-height: 1.1; }
-    .app-nav-subtitle { color: #718096; font-size: 0.78rem; }
+    .app-nav-title {
+        color: var(--ink);
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -.02em;
+        line-height: 1.1;
+    }
+    .app-nav-subtitle {
+        color: var(--muted);
+        font-size: 0.75rem;
+        margin-top: 0.18rem;
+    }
+    div[data-testid="stRadio"] {
+        padding: 0.35rem;
+        border: 1px solid rgba(37, 99, 235, .12);
+        border-radius: 1rem;
+        background: rgba(248, 252, 255, .78);
+        box-shadow: 0 6px 18px rgba(15, 23, 42, .04);
+    }
     div[data-testid="stRadio"] > label { display: none; }
     div[data-testid="stRadio"] > div {
         gap: 0.35rem;
         flex-wrap: wrap;
     }
     div[data-testid="stRadio"] label {
-        border: 1px solid rgba(128, 128, 128, 0.25);
+        border: 1px solid transparent;
         border-radius: 999px;
-        padding: 0.25rem 0.7rem;
-        transition: background 120ms ease, border-color 120ms ease;
+        padding: 0.25rem 0.72rem;
+        color: #294766;
+        background: transparent;
+        transition: all 150ms ease;
     }
     div[data-testid="stRadio"] label:hover {
-        border-color: #0ea5a8;
-        background: rgba(14, 165, 168, 0.08);
+        color: var(--blue);
+        border-color: rgba(37, 99, 235, .2);
+        background: rgba(37, 99, 235, .07);
+        transform: translateY(-1px);
+    }
+    div[data-testid="stRadio"] label:has(input:checked) {
+        color: white;
+        border-color: var(--blue);
+        background: linear-gradient(100deg, var(--aqua), var(--blue));
+        box-shadow: 0 5px 12px rgba(37, 99, 235, .2);
+    }
+    div[data-testid="stRadio"] label:has(input:checked) p {
+        color: white;
+        font-weight: 650;
+    }
+    div[data-testid="stRadio"] label > div > div:first-child {
+        display: none;
+    }
+    div[data-testid="stRadio"] label > div {
+        display: block;
+    }
+    .app-disclaimer {
+        color: #7a8797;
+        font-size: .78rem;
+        margin: .65rem .2rem 1rem;
+    }
+    @media (max-width: 800px) {
+        .app-nav { align-items: flex-start; }
+        .app-nav-subtitle { max-width: 15rem; }
+        div[data-testid="stRadio"] label { padding: .22rem .52rem; }
     }
     </style>
     <div class="app-nav">
-        <div class="app-nav-mark">A</div>
-        <div>
-            <div class="app-nav-title">AquaShield</div>
-            <div class="app-nav-subtitle">Explainable environmental intelligence · Component 03</div>
+        <div class="app-nav-brand">
+            <div class="app-nav-mark">A</div>
+            <div>
+                <div class="app-nav-title">AquaShield</div>
+                <div class="app-nav-subtitle">Explainable environmental intelligence · Component 03</div>
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -93,7 +171,7 @@ def main():
         "Prediction History", "Component 04 Export", "About the Research"
     ]
     page = st.radio("Navigate", pages, horizontal=True, key="active_page")
-    st.caption("Synthetic demonstration data is not validated monitoring data.")
+    st.markdown('<div class="app-disclaimer">Synthetic demonstration data is not validated monitoring data.</div>', unsafe_allow_html=True)
     if page == "Dashboard":
         dashboard()
     elif page == "Upload Dataset":
