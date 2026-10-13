@@ -38,14 +38,62 @@ def synthetic_data(rows=96):
 
 def main():
     st.set_page_config(page_title="AquaShield C03", layout="wide")
-    st.title("AquaShield | Explainable Contamination Risk")
-    st.caption("Component 03 research prototype - synthetic demonstration data is not validated monitoring data.")
+    st.markdown("""
+    <style>
+    .app-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.65rem 0 0.9rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+        margin-bottom: 1.2rem;
+    }
+    .app-nav-mark {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 0.7rem;
+        background: linear-gradient(135deg, #0ea5a8, #2563eb);
+        color: white;
+        font-size: 1.15rem;
+        font-weight: 800;
+    }
+    .app-nav-title { font-size: 1.2rem; font-weight: 750; line-height: 1.1; }
+    .app-nav-subtitle { color: #718096; font-size: 0.78rem; }
+    div[data-testid="stRadio"] > label { display: none; }
+    div[data-testid="stRadio"] > div {
+        gap: 0.35rem;
+        flex-wrap: wrap;
+    }
+    div[data-testid="stRadio"] label {
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-radius: 999px;
+        padding: 0.25rem 0.7rem;
+        transition: background 120ms ease, border-color 120ms ease;
+    }
+    div[data-testid="stRadio"] label:hover {
+        border-color: #0ea5a8;
+        background: rgba(14, 165, 168, 0.08);
+    }
+    </style>
+    <div class="app-nav">
+        <div class="app-nav-mark">A</div>
+        <div>
+            <div class="app-nav-title">AquaShield</div>
+            <div class="app-nav-subtitle">Explainable environmental intelligence · Component 03</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     if "data" not in st.session_state:
         st.session_state.data = synthetic_data()
-    page = st.sidebar.radio("Navigate", [
+    pages = [
         "Dashboard", "Upload Dataset", "Data Preprocessing", "Feature Engineering",
         "Risk Prediction", "SHAP Explanations", "Anomaly Detection", "Model Evaluation",
-        "Prediction History", "Component 04 Export", "About the Research"])
+        "Prediction History", "Component 04 Export", "About the Research"
+    ]
+    page = st.radio("Navigate", pages, horizontal=True, key="active_page")
+    st.caption("Synthetic demonstration data is not validated monitoring data.")
     if page == "Dashboard":
         dashboard()
     elif page == "Upload Dataset":
