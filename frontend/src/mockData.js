@@ -2,12 +2,11 @@
 export const SITES = {
   ambatale: { id: 'ambatale', name: 'Ambatale intake', population: 420000 },
   biyagama: { id: 'biyagama', name: 'Biyagama', population: 180000 },
-  hanwella: { id: 'hanwella', name: 'Hanwella', population: 60000 },
 }
-const BASE = { ambatale: 1.0, biyagama: 0.6, hanwella: 0.3 }
+const BASE = { ambatale: 1.0, biyagama: 0.6 }
 
 export function observations(siteId, n = 24) {
-  const k = BASE[siteId]
+  const k = BASE[siteId] || 1.0
   const now = Date.now()
   return Array.from({ length: n }, (_, i) => {
     const rain = Math.max(0, 2 + k * 18 * Math.exp(-((i - 16) ** 2) / 30))
@@ -55,7 +54,7 @@ export function network() {
 }
 
 export function risk() {
-  const spec = { ambatale: [0.84, 'critical', 0.81, true], biyagama: [0.55, 'moderate', 0.74, false], hanwella: [0.18, 'low', 0.88, false] }
+  const spec = { ambatale: [0.84, 'critical', 0.81, true], biyagama: [0.55, 'moderate', 0.74, false] }
   return Object.entries(spec).map(([id, [score, cat, conf, anom]]) => ({
     site_id: id, horizon_h: 6, risk_score: score, risk_category: cat, confidence: conf,
     explanation: [
@@ -84,8 +83,5 @@ export function recommendations() {
         { action: 'Prepare alternative source', urgency: 'within_6h', rationale: 'Risk may rise if rain continues.' },
       ],
       factors: [{ name: 'Contamination risk', weight: 0.44 }, { name: 'Population exposed', weight: 0.31 }, { name: 'Communication status', weight: 0.05 }, { name: 'Resource availability', weight: 0.2 }] },
-    { site_id: 'hanwella', rank: 3, priority_score: 0.1, population_exposed: 60000, communication_status: 'good',
-      actions: [{ action: 'Continue routine monitoring', urgency: 'monitor', rationale: 'Low risk and stable readings.' }],
-      factors: [{ name: 'Contamination risk', weight: 0.4 }, { name: 'Population exposed', weight: 0.2 }, { name: 'Communication status', weight: 0.05 }, { name: 'Resource availability', weight: 0.35 }] },
   ]
 }

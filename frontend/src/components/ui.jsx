@@ -11,7 +11,7 @@ export function useData(loader, deps = []) {
   return data
 }
 
-export const siteName = (id) => ({ ambatale: 'Ambatale intake', biyagama: 'Biyagama', hanwella: 'Hanwella' }[id] || id)
+export const siteName = (id) => ({ ambatale: 'Ambatale intake', biyagama: 'Biyagama' }[id] || id)
 
 export function Pill({ level, children }) {
   const tone = {

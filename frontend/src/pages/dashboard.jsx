@@ -10,7 +10,6 @@ const USE_API = import.meta.env.VITE_USE_API === 'true'
 const SITES_CONFIG = [
   { id: 'ambatale', name: 'Ambatale Intake', role: 'Primary Municipal Intake', pop: '420,000', badge: 'Critical Risk', tone: 'rose' },
   { id: 'biyagama', name: 'Biyagama Plant', role: 'Secondary Industrial Intake', pop: '180,000', badge: 'Moderate Watch', tone: 'amber' },
-  { id: 'hanwella', name: 'Hanwella Station', role: 'Upstream Baseline Monitor', pop: '60,000', badge: 'Nominal', tone: 'emerald' },
 ]
 
 const PARAM_CONFIG = {
@@ -29,8 +28,8 @@ export default function Dashboard() {
   const [checkedActions, setCheckedActions] = useState({ 0: false, 1: false, 2: false })
 
   const net = useData(getNetwork)
-  const risk = useData(getRisk)
-  const recs = useData(getRecommendations)
+  const rawRisk = useData(getRisk)
+  const rawRecs = useData(getRecommendations)
   const observations = useData(() => getObservations(selectedSite), [selectedSite])
 
   const handleRefresh = () => {
@@ -45,8 +44,10 @@ export default function Dashboard() {
     setCheckedActions((prev) => ({ ...prev, [index]: !prev[index] }))
   }
 
-  if (!net || !risk || !recs || !observations) return <DashboardSkeleton />
+  if (!net || !rawRisk || !rawRecs || !observations) return <DashboardSkeleton />
 
+  const risk = rawRisk.filter((item) => ['ambatale', 'biyagama'].includes(item.site_id))
+  const recs = rawRecs.filter((item) => ['ambatale', 'biyagama'].includes(item.site_id))
   const riskBySite = Object.fromEntries(risk.map((item) => [item.site_id, item]))
   const topRecommendation = recs[0]
   const topRisk = riskBySite[topRecommendation?.site_id || 'ambatale']
@@ -219,10 +220,10 @@ export default function Dashboard() {
           <div className="mt-4">
             <p className="text-xs font-semibold uppercase tracking-wider text-sky-800">Populations Safeguarded</p>
             <p className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900">
-              660<span className="text-xl font-semibold text-sky-700">,000</span>
+              {totalPopulation.toLocaleString()}<span className="text-xl font-semibold text-sky-700"> residents</span>
             </p>
             <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
-              <span>Across 3 service zones</span>
+              <span>Across {recs.length} service zones (Ambatale &amp; Biyagama)</span>
               <span className="font-semibold text-sky-700">100% active coverage</span>
             </div>
           </div>
