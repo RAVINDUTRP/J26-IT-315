@@ -220,6 +220,112 @@ def main():
         font-size: .84rem;
         margin: .9rem 0 1rem;
     }
+    .research-hero {
+        position: relative;
+        overflow: hidden;
+        padding: 1.8rem 2rem;
+        border-radius: 1.35rem;
+        color: white;
+        background: linear-gradient(120deg, #083b63 0%, #087f87 58%, #0ea5a8 100%);
+        box-shadow: 0 14px 32px rgba(8, 59, 99, .2);
+        margin: 1.1rem 0 1rem;
+    }
+    .research-hero::after {
+        content: "";
+        position: absolute;
+        width: 15rem;
+        height: 15rem;
+        right: -4rem;
+        top: -8rem;
+        border: 1px solid rgba(255,255,255,.25);
+        border-radius: 50%;
+        box-shadow: 0 0 0 2rem rgba(255,255,255,.06), 0 0 0 4rem rgba(255,255,255,.04);
+    }
+    .research-eyebrow {
+        position: relative;
+        z-index: 1;
+        color: #9ff5ed;
+        font-size: .72rem;
+        font-weight: 800;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+    }
+    .research-hero h1 {
+        position: relative;
+        z-index: 1;
+        margin: .45rem 0 .5rem;
+        color: white;
+        font-size: 2rem;
+        letter-spacing: -.04em;
+    }
+    .research-hero p {
+        position: relative;
+        z-index: 1;
+        max-width: 48rem;
+        color: rgba(255,255,255,.84);
+        font-size: .92rem;
+        line-height: 1.65;
+        margin: 0;
+    }
+    .research-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+        margin-top: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+    .research-meta span {
+        padding: .35rem .7rem;
+        border: 1px solid rgba(255,255,255,.22);
+        border-radius: 999px;
+        color: rgba(255,255,255,.9);
+        font-size: .72rem;
+    }
+    .research-card {
+        height: 100%;
+        padding: 1.15rem 1.25rem;
+        border: 1px solid rgba(37,99,235,.12);
+        border-radius: 1rem;
+        background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(242,249,253,.9));
+        box-shadow: 0 8px 22px rgba(15,23,42,.055);
+    }
+    .research-card h3 {
+        color: var(--ink);
+        font-size: 1rem;
+        margin: 0 0 .55rem;
+    }
+    .research-card p, .research-card li {
+        color: #60748a;
+        font-size: .84rem;
+        line-height: 1.65;
+    }
+    .research-card ul, .research-card ol { padding-left: 1.15rem; margin-bottom: .2rem; }
+    .research-section-title {
+        color: var(--ink);
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -.025em;
+        margin: 1.35rem 0 .7rem;
+    }
+    .research-callout {
+        padding: 1rem 1.2rem;
+        border-left: 4px solid var(--aqua);
+        border-radius: .85rem;
+        color: #3e5d73;
+        background: rgba(14,165,168,.08);
+        line-height: 1.65;
+        font-size: .88rem;
+    }
+    .research-limitations {
+        padding: 1.1rem 1.25rem;
+        border: 1px solid rgba(212,167,44,.3);
+        border-radius: 1rem;
+        color: #705d20;
+        background: #fff9df;
+        line-height: 1.65;
+        font-size: .84rem;
+    }
     @media (max-width: 800px) {
         .app-nav { align-items: flex-start; }
         .app-nav-subtitle { max-width: 15rem; }
@@ -422,117 +528,133 @@ def export_page():
 
 
 def about_page():
-    st.markdown("## Explainable Contamination Risk Prediction")
     st.markdown("""
-    ### 1. Research Overview
+    <section class="research-hero">
+        <div class="research-eyebrow">Research profile · Component 03</div>
+        <h1>Explainable Contamination Risk Prediction</h1>
+        <p>Adaptive environmental intelligence for early water contamination detection and disaster response.</p>
+        <div class="research-meta">
+            <span>Project J26-IT-315</span>
+            <span>Experimental quantitative research</span>
+            <span>AI · XAI · Environmental monitoring</span>
+        </div>
+    </section>
+    """, unsafe_allow_html=True)
 
-    **Research Title:** Adaptive Environmental Intelligence for Early Water Contamination Detection and Disaster Response
+    st.markdown('<div class="research-section-title">Research at a glance</div>', unsafe_allow_html=True)
+    overview = st.columns(3)
+    for column, value, label in zip(
+        overview,
+        ("Future risk", "SHAP explanations", "Anomaly signals"),
+        ("Forecast what may happen next", "Understand model contributions", "Find unusual patterns"),
+    ):
+        column.markdown(
+            f'<div class="metric-card"><div class="metric-label">{label}</div>'
+            f'<div class="metric-value">{value}</div></div>',
+            unsafe_allow_html=True,
+        )
 
-    **Individual Research Component:** Component 03 – Explainable Contamination Risk Prediction  
-    **Project ID:** J26-IT-315  
-    **Research Area:** Artificial Intelligence, Machine Learning, Explainable AI, Environmental Monitoring, and Water Quality Prediction.
+    left, right = st.columns(2)
+    with left:
+        st.markdown("""
+        <div class="research-card">
+        <h3>Research overview</h3>
+        <p>This component develops an Explainable Artificial Intelligence framework
+        to predict future water contamination risk using water-quality observations,
+        rainfall and weather information, historical contamination patterns, and
+        temporal environmental features.</p>
+        <p>Unlike a current-status classifier, the framework forecasts potential
+        future risk, explains the factors used by the model, and investigates
+        unusual water-quality patterns or sensor abnormalities.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with right:
+        st.markdown("""
+        <div class="research-card">
+        <h3>The research problem</h3>
+        <p>Heavy rainfall and flooding can transport sediments, sewage, agricultural
+        pollutants, and industrial waste into water sources. Conventional monitoring
+        may identify deterioration only after it occurs, while opaque predictions
+        make it difficult to understand why risk is elevated.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    This research component focuses on developing an Explainable Artificial Intelligence
-    (XAI)-based framework to predict future water contamination risk using water-quality
-    observations, weather and rainfall information, historical contamination patterns,
-    and temporal environmental features.
+    st.markdown('<div class="research-section-title">Main objective</div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="research-callout">To design, develop, and evaluate an Explainable
+    Artificial Intelligence-based framework that forecasts future water contamination
+    risk from multi-source environmental data while providing transparent explanations
+    and anomaly indications for disaster-management decision support.</div>
+    """, unsafe_allow_html=True)
 
-    Unlike systems that only classify the current water-quality status, the proposed
-    framework aims to forecast potential future contamination risk and explain the
-    factors contributing to each prediction. It also investigates anomaly detection
-    to identify unusual water-quality patterns or possible sensor abnormalities.
+    st.markdown('<div class="research-section-title">Specific objectives</div>', unsafe_allow_html=True)
+    objective_columns = st.columns(2)
+    objectives = [
+        "Collect and preprocess water-quality, weather, rainfall, and historical contamination datasets.",
+        "Develop rainfall, lag, accumulated, and water-quality trend features.",
+        "Develop and evaluate models for future contamination-risk prediction.",
+        "Apply SHAP to identify environmental features contributing to predictions.",
+        "Investigate anomalies and potential sensor abnormalities.",
+        "Evaluate prediction, early-warning, explanation, and anomaly performance where reference data exist.",
+    ]
+    for index, objective in enumerate(objectives):
+        objective_columns[index % 2].markdown(
+            f'<div class="research-card" style="margin-bottom:.7rem;"><h3>0{index + 1}</h3>'
+            f'<p>{objective}</p></div>', unsafe_allow_html=True
+        )
 
-    ### 2. Research Problem
+    st.markdown('<div class="research-section-title">Proposed methodology</div>', unsafe_allow_html=True)
+    method_columns = st.columns(5)
+    methods = [
+        ("01", "Preprocess", "Validate, clean, synchronize, and handle missing values."),
+        ("02", "Engineer", "Extract temporal, rainfall, lag, and trend features."),
+        ("03", "Model", "Compare a baseline with XGBoost where appropriate."),
+        ("04", "Explain", "Use SHAP to interpret individual predictions."),
+        ("05", "Evaluate", "Measure performance using suitable chronological test data."),
+    ]
+    for column, (number, title, description) in zip(method_columns, methods):
+        column.markdown(
+            f'<div class="research-card"><div class="dashboard-kicker">{number}</div>'
+            f'<h3>{title}</h3><p>{description}</p></div>', unsafe_allow_html=True
+        )
 
-    Water contamination can increase during heavy rainfall and flooding because surface
-    runoff may transport sediments, sewage, agricultural pollutants, and industrial
-    waste into rivers and other water sources.
+    left, right = st.columns(2)
+    with left:
+        st.markdown("""
+        <div class="research-card">
+        <h3>System inputs</h3>
+        <ul><li>pH, turbidity, electrical conductivity, and TDS</li>
+        <li>Weather and rainfall information</li><li>Historical contamination records</li>
+        <li>Sensor-confidence metadata</li><li>Timestamp and location</li></ul>
+        </div>
+        """, unsafe_allow_html=True)
+    with right:
+        st.markdown("""
+        <div class="research-card">
+        <h3>Expected outputs</h3>
+        <ul><li>Future contamination-risk score and category</li>
+        <li>SHAP feature contributions</li><li>Anomaly indication</li>
+        <li>Prediction timestamp and location</li><li>Structured Component 04 output</li></ul>
+        </div>
+        """, unsafe_allow_html=True)
 
-    Conventional monitoring approaches may identify water-quality problems only after
-    measurements have deteriorated. Furthermore, machine-learning predictions can be
-    difficult to interpret when the reasons behind a prediction are not clearly explained.
+    st.markdown('<div class="research-section-title">Technology stack</div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="research-card"><p><strong>Python</strong> · Streamlit · Pandas · NumPy ·
+    Scikit-learn · XGBoost · SHAP · Isolation Forest · Joblib · CSV · JSON</p></div>
+    """, unsafe_allow_html=True)
 
-    Therefore, this framework investigates future contamination-risk prediction using
-    multiple environmental data sources while providing understandable explanations and
-    identifying unusual patterns.
-
-    ### 3. Main Research Objective
-
-    To design, develop, and evaluate an Explainable Artificial Intelligence-based
-    contamination-risk prediction framework that forecasts future water contamination
-    risk using multi-source environmental data, historical water-quality patterns,
-    weather and rainfall information, and engineered temporal features while providing
-    transparent prediction explanations and anomaly indications for disaster-management
-    decision support.
-
-    ### 4. Specific Objectives
-
-    1. Collect and preprocess water-quality, weather, rainfall, and historical contamination datasets.
-    2. Develop temporal features such as rainfall intensity, rainfall increase rate, accumulated rainfall, lag features, and water-quality trends.
-    3. Develop and evaluate machine-learning models for future contamination-risk prediction.
-    4. Apply SHAP as the primary explainability method to identify environmental features contributing to predictions.
-    5. Investigate anomaly detection for unusual contamination patterns and potential sensor abnormalities.
-    6. Evaluate prediction performance, early-warning lead time, explanation quality, and anomaly-detection performance where suitable reference data are available.
-
-    ### 5. Proposed Methodology
-
-    The research follows an experimental quantitative approach.
-
-    - **Data preprocessing:** Cleaning, validation, missing-value handling, and timestamp synchronization.
-    - **Feature engineering:** Extracting temporal and rainfall-related features from available observations.
-    - **Machine learning:** Evaluating a baseline model and XGBoost where appropriate.
-    - **Explainable AI:** Using SHAP to interpret model predictions.
-    - **Anomaly detection:** Investigating Isolation Forest as an initial candidate method.
-    - **Evaluation:** Comparing model performance against an appropriate baseline using suitable test data.
-
-    Final model selection and performance conclusions depend on the available data and
-    experimental results.
-
-    ### 6. System Inputs
-
-    - Water-quality observations, such as pH, turbidity, electrical conductivity, and total dissolved solids (TDS).
-    - Weather and rainfall information.
-    - Historical water-quality measurements and contamination records.
-    - Sensor-confidence metadata, when available.
-    - Timestamp and location information.
-
-    ### 7. Expected Outputs
-
-    - Predicted future contamination-risk score.
-    - Predicted risk category using documented thresholds.
-    - Prediction confidence or calibrated probability, where properly supported.
-    - SHAP-based explanation of important contributing features.
-    - Anomaly flag for unusual observations.
-    - Prediction timestamp and location.
-    - Structured output for integration with Component 04.
-
-    These are intended system outputs; their validity will be established through
-    implementation and evaluation.
-
-    ### 8. Technology Stack
-
-    - **Programming Language:** Python
-    - **User Interface:** Streamlit
-    - **Data Processing:** Pandas and NumPy
-    - **Machine Learning:** Scikit-learn and XGBoost
-    - **Explainability:** SHAP
-    - **Anomaly Detection:** Isolation Forest
-    - **Persistence and Integration:** Joblib, CSV, and JSON
-
-    ### Research Scope and Limitations
-
-    This application is a research prototype, not a certified public-health monitoring
-    system. The included demonstration data is synthetic and must not be interpreted as
-    validated Sri Lankan river data or as evidence of real contamination events.
-
-    A future-risk model requires appropriately labelled future observations. Model scores
-    are not calibrated confidence values unless calibration has been implemented and
-    validated. SHAP describes how the model uses features; it does not prove that a
-    feature caused contamination. An anomaly is not automatically proof of contamination.
-
-    Component 03 provides predictions, explanations, anomaly indications, and structured
-    outputs only. Disaster-response recommendations belong to Component 04.
-    """)
+    st.markdown('<div class="research-section-title">Scope and limitations</div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="research-limitations"><strong>Research prototype notice.</strong>
+    This is not a certified public-health monitoring system. Demonstration data is
+    synthetic and does not represent validated Sri Lankan river observations or real
+    contamination events. Future-risk learning requires appropriately labelled future
+    observations. Scores are not calibrated confidence values unless calibration is
+    implemented and validated. SHAP describes model behavior, not causation. Anomalies
+    are not automatically proof of contamination. Disaster-response recommendations
+    belong to Component 04.</div>
+    """, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
