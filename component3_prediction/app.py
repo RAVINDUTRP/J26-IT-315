@@ -144,7 +144,7 @@ def main():
         display: block;
     }
     .app-disclaimer {
-        color: #7a8797;
+        color: #b7c7d9;
         font-size: .78rem;
         margin: .65rem .2rem 1rem;
     }
@@ -210,7 +210,7 @@ def main():
         margin-top: .12rem;
     }
     .section-heading {
-        color: var(--ink);
+        color: #dcecff;
         font-size: 1.08rem;
         font-weight: 750;
         margin: 1.35rem 0 .55rem;
