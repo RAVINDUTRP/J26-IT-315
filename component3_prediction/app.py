@@ -266,7 +266,7 @@ def main():
     elif page == "Component 04 Export":
         export_page()
     else:
-        st.info("C03 predicts future contamination risk, explains model behavior, and reports unusual patterns. Disaster-response recommendations belong to Component 04.")
+        about_page()
 
 
 def current_features():
@@ -419,6 +419,120 @@ def export_page():
     payload = export_json(result)
     st.download_button("Download Component 04 JSON", payload, "component03_assessment.json", "application/json")
     st.json(result)
+
+
+def about_page():
+    st.markdown("## Explainable Contamination Risk Prediction")
+    st.markdown("""
+    ### 1. Research Overview
+
+    **Research Title:** Adaptive Environmental Intelligence for Early Water Contamination Detection and Disaster Response
+
+    **Individual Research Component:** Component 03 – Explainable Contamination Risk Prediction  
+    **Project ID:** J26-IT-315  
+    **Research Area:** Artificial Intelligence, Machine Learning, Explainable AI, Environmental Monitoring, and Water Quality Prediction.
+
+    This research component focuses on developing an Explainable Artificial Intelligence
+    (XAI)-based framework to predict future water contamination risk using water-quality
+    observations, weather and rainfall information, historical contamination patterns,
+    and temporal environmental features.
+
+    Unlike systems that only classify the current water-quality status, the proposed
+    framework aims to forecast potential future contamination risk and explain the
+    factors contributing to each prediction. It also investigates anomaly detection
+    to identify unusual water-quality patterns or possible sensor abnormalities.
+
+    ### 2. Research Problem
+
+    Water contamination can increase during heavy rainfall and flooding because surface
+    runoff may transport sediments, sewage, agricultural pollutants, and industrial
+    waste into rivers and other water sources.
+
+    Conventional monitoring approaches may identify water-quality problems only after
+    measurements have deteriorated. Furthermore, machine-learning predictions can be
+    difficult to interpret when the reasons behind a prediction are not clearly explained.
+
+    Therefore, this framework investigates future contamination-risk prediction using
+    multiple environmental data sources while providing understandable explanations and
+    identifying unusual patterns.
+
+    ### 3. Main Research Objective
+
+    To design, develop, and evaluate an Explainable Artificial Intelligence-based
+    contamination-risk prediction framework that forecasts future water contamination
+    risk using multi-source environmental data, historical water-quality patterns,
+    weather and rainfall information, and engineered temporal features while providing
+    transparent prediction explanations and anomaly indications for disaster-management
+    decision support.
+
+    ### 4. Specific Objectives
+
+    1. Collect and preprocess water-quality, weather, rainfall, and historical contamination datasets.
+    2. Develop temporal features such as rainfall intensity, rainfall increase rate, accumulated rainfall, lag features, and water-quality trends.
+    3. Develop and evaluate machine-learning models for future contamination-risk prediction.
+    4. Apply SHAP as the primary explainability method to identify environmental features contributing to predictions.
+    5. Investigate anomaly detection for unusual contamination patterns and potential sensor abnormalities.
+    6. Evaluate prediction performance, early-warning lead time, explanation quality, and anomaly-detection performance where suitable reference data are available.
+
+    ### 5. Proposed Methodology
+
+    The research follows an experimental quantitative approach.
+
+    - **Data preprocessing:** Cleaning, validation, missing-value handling, and timestamp synchronization.
+    - **Feature engineering:** Extracting temporal and rainfall-related features from available observations.
+    - **Machine learning:** Evaluating a baseline model and XGBoost where appropriate.
+    - **Explainable AI:** Using SHAP to interpret model predictions.
+    - **Anomaly detection:** Investigating Isolation Forest as an initial candidate method.
+    - **Evaluation:** Comparing model performance against an appropriate baseline using suitable test data.
+
+    Final model selection and performance conclusions depend on the available data and
+    experimental results.
+
+    ### 6. System Inputs
+
+    - Water-quality observations, such as pH, turbidity, electrical conductivity, and total dissolved solids (TDS).
+    - Weather and rainfall information.
+    - Historical water-quality measurements and contamination records.
+    - Sensor-confidence metadata, when available.
+    - Timestamp and location information.
+
+    ### 7. Expected Outputs
+
+    - Predicted future contamination-risk score.
+    - Predicted risk category using documented thresholds.
+    - Prediction confidence or calibrated probability, where properly supported.
+    - SHAP-based explanation of important contributing features.
+    - Anomaly flag for unusual observations.
+    - Prediction timestamp and location.
+    - Structured output for integration with Component 04.
+
+    These are intended system outputs; their validity will be established through
+    implementation and evaluation.
+
+    ### 8. Technology Stack
+
+    - **Programming Language:** Python
+    - **User Interface:** Streamlit
+    - **Data Processing:** Pandas and NumPy
+    - **Machine Learning:** Scikit-learn and XGBoost
+    - **Explainability:** SHAP
+    - **Anomaly Detection:** Isolation Forest
+    - **Persistence and Integration:** Joblib, CSV, and JSON
+
+    ### Research Scope and Limitations
+
+    This application is a research prototype, not a certified public-health monitoring
+    system. The included demonstration data is synthetic and must not be interpreted as
+    validated Sri Lankan river data or as evidence of real contamination events.
+
+    A future-risk model requires appropriately labelled future observations. Model scores
+    are not calibrated confidence values unless calibration has been implemented and
+    validated. SHAP describes how the model uses features; it does not prove that a
+    feature caused contamination. An anomaly is not automatically proof of contamination.
+
+    Component 03 provides predictions, explanations, anomaly indications, and structured
+    outputs only. Disaster-response recommendations belong to Component 04.
+    """)
 
 
 if __name__ == "__main__":
