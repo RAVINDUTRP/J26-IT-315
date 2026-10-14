@@ -52,12 +52,13 @@ def main():
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        padding: 0.95rem 1.1rem;
+        min-height: 3.75rem;
+        padding: 0.6rem 0.85rem;
         border: 1px solid rgba(37, 99, 235, 0.12);
-        border-radius: 1.1rem;
+        border-radius: 0.85rem;
         background: linear-gradient(110deg, rgba(255,255,255,.96), rgba(239,250,252,.9));
-        box-shadow: 0 10px 28px rgba(37, 99, 235, .08);
-        margin-bottom: 0.8rem;
+        box-shadow: 0 7px 20px rgba(37, 99, 235, .07);
+        margin-bottom: 0.55rem;
         overflow: hidden;
     }
     .app-nav::after {
@@ -79,26 +80,26 @@ def main():
     .app-nav-mark {
         display: grid;
         place-items: center;
-        width: 2.65rem;
-        height: 2.65rem;
-        border-radius: 0.85rem;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 0.65rem;
         background: linear-gradient(135deg, var(--aqua), var(--blue));
         color: white;
-        font-size: 1.3rem;
+        font-size: 1.05rem;
         font-weight: 850;
-        box-shadow: 0 7px 16px rgba(37, 99, 235, .24);
+        box-shadow: 0 5px 12px rgba(37, 99, 235, .2);
     }
     .app-nav-title {
         color: var(--ink);
-        font-size: 1.25rem;
+        font-size: 1.08rem;
         font-weight: 800;
         letter-spacing: -.02em;
         line-height: 1.1;
     }
     .app-nav-subtitle {
         color: var(--muted);
-        font-size: 0.75rem;
-        margin-top: 0.18rem;
+        font-size: 0.68rem;
+        margin-top: 0.12rem;
     }
     div[data-testid="stRadio"] {
         padding: 0.35rem;
