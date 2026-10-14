@@ -5,9 +5,8 @@ import math
 SITES = {
     "ambatale": {"name": "Ambatale intake", "lat": 6.9547, "lon": 79.9617, "population": 420000},
     "biyagama": {"name": "Biyagama", "lat": 6.9500, "lon": 79.9990, "population": 180000},
-    "hanwella": {"name": "Hanwella", "lat": 6.9019, "lon": 80.0820, "population": 60000},
 }
-_BASE = {"ambatale": 1.0, "biyagama": 0.6, "hanwella": 0.3}
+_BASE = {"ambatale": 1.0, "biyagama": 0.6}
 
 
 def now():
@@ -50,7 +49,7 @@ def network():
 
 
 def risk():
-    spec = {"ambatale": (0.84, "critical", 0.81, True), "biyagama": (0.55, "moderate", 0.74, False), "hanwella": (0.18, "low", 0.88, False)}
+    spec = {"ambatale": (0.84, "critical", 0.81, True), "biyagama": (0.55, "moderate", 0.74, False)}
     out = []
     for sid, (score, cat, conf, anom) in spec.items():
         out.append({

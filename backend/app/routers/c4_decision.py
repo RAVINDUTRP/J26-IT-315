@@ -8,5 +8,5 @@ router = APIRouter()
 @router.get("/recommendations")
 def recommendations():
     pops = {k: v["population"] for k, v in m.SITES.items()}
-    comm = {"ambatale": "degraded", "biyagama": "good", "hanwella": "good"}
+    comm = {"ambatale": "degraded", "biyagama": "good"}
     return recommend(m.risk(), pops, comm)
