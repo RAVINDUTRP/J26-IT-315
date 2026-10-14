@@ -181,7 +181,9 @@ def main():
     }
     .metric-card {
         min-height: 7.1rem;
+        box-sizing: border-box;
         padding: 1rem 1.05rem;
+        margin-bottom: 1rem;
         border: 1px solid rgba(37, 99, 235, .12);
         border-radius: 1rem;
         background: linear-gradient(145deg, rgba(255,255,255,.97), rgba(242,249,253,.9));
@@ -196,8 +198,10 @@ def main():
     }
     .metric-value {
         color: var(--ink);
-        font-size: 1.65rem;
+        font-size: 1.42rem;
         font-weight: 800;
+        line-height: 1.25;
+        white-space: nowrap;
         margin-top: .55rem;
     }
     .metric-note {
@@ -283,8 +287,10 @@ def main():
         font-size: .72rem;
     }
     .research-card {
-        height: 100%;
+        min-height: 100%;
+        box-sizing: border-box;
         padding: 1.15rem 1.25rem;
+        margin-bottom: 1rem;
         border: 1px solid rgba(37,99,235,.12);
         border-radius: 1rem;
         background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(242,249,253,.9));
@@ -299,6 +305,7 @@ def main():
         color: #60748a;
         font-size: .84rem;
         line-height: 1.65;
+        overflow-wrap: anywhere;
     }
     .research-card ul, .research-card ol { padding-left: 1.15rem; margin-bottom: .2rem; }
     .research-section-title {
