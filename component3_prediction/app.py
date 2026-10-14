@@ -163,7 +163,7 @@ def main():
         text-transform: uppercase;
     }
     .dashboard-title {
-        color: var(--ink);
+        color: #dcecff;
         font-size: 1.75rem;
         font-weight: 800;
         letter-spacing: -.04em;
@@ -309,7 +309,7 @@ def main():
     }
     .research-card ul, .research-card ol { padding-left: 1.15rem; margin-bottom: .2rem; }
     .research-section-title {
-        color: var(--ink);
+        color: #dcecff;
         font-size: 1.25rem;
         font-weight: 800;
         letter-spacing: -.025em;
@@ -319,8 +319,9 @@ def main():
         padding: 1rem 1.2rem;
         border-left: 4px solid var(--aqua);
         border-radius: .85rem;
-        color: #3e5d73;
-        background: rgba(14,165,168,.08);
+        color: #c9e1ed;
+        background: rgba(14,165,168,.14);
+        box-shadow: inset 0 0 0 1px rgba(14,165,168,.08);
         line-height: 1.65;
         font-size: .88rem;
     }
