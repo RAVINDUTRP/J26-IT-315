@@ -1,4 +1,4 @@
-SEVERITY = {"low": 0.1, "moderate": 0.4, "high": 0.7, "critical":  1.0}
+SEVERITY = {"low": 0.1, "moderate":  0.4, "high": 0.7, "critical":  1.0}
 
 
 def priority_score(assessment: dict, population: int, comm_status: str) -> float:
