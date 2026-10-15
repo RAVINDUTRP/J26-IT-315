@@ -246,16 +246,16 @@ export default function AdaptiveSensing() {
         </div>
 
         {/* Station Switcher */}
-        <div className="flex flex-wrap items-center gap-2.5">
-          <div className="flex rounded-xl bg-slate-200/70 p-1 shadow-inner">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:min-w-[28rem]">
+          <div className="flex rounded-2xl bg-slate-200/70 p-1.5 shadow-inner">
             {SITES.map((st) => (
               <button
                 key={st.id}
                 onClick={() => setSite(st.id)}
-                className={`flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold transition-all ${
+                className={`flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
                   site === st.id
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white text-slate-900 shadow-[0_4px_12px_-6px_rgba(15,23,42,0.35)]'
+                    : 'text-slate-600 hover:bg-white/60 hover:text-slate-900'
                 }`}
               >
                 <span
@@ -264,22 +264,27 @@ export default function AdaptiveSensing() {
                   }`}
                 />
                 <span>{st.name}</span>
-                <span className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-500">
+                <span className="rounded-lg bg-slate-100 px-2 py-1 font-mono text-[10px] text-slate-500">
                   {st.id === 'ambatale' ? 'AMB-01' : 'BYG-02'}
                 </span>
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-white px-3.5 py-2 shadow-sm">
-            <div className="text-right">
-              <p className="text-[11px] font-semibold text-slate-500">RADIO LINK</p>
-              <p className="font-mono text-xs font-bold text-slate-800">{currentSiteInfo.rssi} · {currentSiteInfo.snr}</p>
-            </div>
-            <span className="grid size-8 place-items-center rounded-lg bg-emerald-50 text-emerald-600">
-              <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200/90 bg-white px-4 py-3 shadow-[0_8px_20px_-12px_rgba(15,23,42,0.35)]">
+            <span className="relative grid size-9 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+              <span className="absolute inset-0 rounded-xl bg-emerald-400/10 animate-pulse" />
+              <svg className="relative size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" />
               </svg>
+            </span>
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Radio link</p>
+              <p className="mt-0.5 font-mono text-sm font-bold text-slate-800">{currentSiteInfo.rssi} <span className="text-slate-300">·</span> {currentSiteInfo.snr}</p>
+            </div>
+            <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700">
+              <span className="size-1.5 rounded-full bg-emerald-500" />
+              Connected
             </span>
           </div>
         </div>
