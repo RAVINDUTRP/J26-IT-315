@@ -114,31 +114,42 @@ export default function Dashboard() {
           </div>
 
           {/* Quick controls bar */}
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-4 py-2 text-xs shadow-sm backdrop-blur-md">
-              <span className="size-2 rounded-full bg-emerald-500" />
-              <span className="font-medium text-slate-500">Last Telemetry:</span>
-              <span className="font-semibold text-slate-800 tabular-nums">
-                {lastSyncTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          <div className="grid w-full max-w-[31rem] grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] lg:w-auto lg:min-w-[31rem]">
+            <div
+              className="flex min-h-14 items-center gap-3 rounded-full border border-slate-200/90 bg-white/95 px-5 py-3 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.28)] backdrop-blur-md sm:min-w-0"
+              title="Telemetry feed status"
+            >
+              <span className="relative flex size-3 shrink-0">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400/60" />
+                <span className="relative inline-flex size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/10" />
               </span>
+              <span className="text-sm font-medium text-slate-500">Last telemetry</span>
+              <time className="ml-auto text-base font-bold tracking-tight text-slate-800 tabular-nums">
+                {lastSyncTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+              </time>
             </div>
 
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100 hover:text-slate-900 active:scale-95 disabled:opacity-50 cursor-pointer"
-              title="Refresh telemetry feed"
+              className="inline-flex min-h-14 cursor-pointer items-center justify-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-5 text-sm font-semibold text-slate-700 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.28)] transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:text-slate-950 hover:shadow-[0_12px_28px_-12px_rgba(15,23,42,0.35)] active:translate-y-0 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60"
+              title={isRefreshing ? 'Syncing telemetry feed' : 'Refresh telemetry feed'}
             >
-              <RefreshIcon className={`size-3.5 ${isRefreshing ? 'animate-spin text-teal-600' : 'text-slate-500'}`} />
-              <span>{isRefreshing ? 'Syncing...' : 'Sync Data'}</span>
+              <span className="grid size-7 place-items-center rounded-full bg-slate-100 text-slate-500">
+                <RefreshIcon className={`size-4 ${isRefreshing ? 'animate-spin text-teal-600' : ''}`} />
+              </span>
+              <span>{isRefreshing ? 'Syncing…' : 'Sync data'}</span>
             </button>
 
             <Link
               to="/decision"
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:from-slate-800 hover:to-slate-700 hover:shadow-lg active:scale-95"
+              className="group inline-flex min-h-14 items-center gap-3 rounded-full bg-gradient-to-r from-slate-900 via-slate-900 to-slate-800 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_-10px_rgba(15,23,42,0.65)] transition hover:-translate-y-0.5 hover:from-slate-800 hover:to-slate-700 hover:shadow-[0_14px_28px_-10px_rgba(15,23,42,0.7)] active:translate-y-0 active:scale-[0.98] sm:col-span-2"
             >
-              <ShieldAlertIcon className="size-3.5 text-amber-400" />
-              <span>Response Protocol</span>
+              <span className="grid size-8 place-items-center rounded-full bg-amber-400/15 ring-1 ring-amber-300/20">
+                <ShieldAlertIcon className="size-4 text-amber-300" />
+              </span>
+              <span>Response protocol</span>
+              <ArrowUpRightIcon className="ml-auto size-4 text-slate-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
             </Link>
           </div>
         </div>
@@ -871,6 +882,15 @@ function ShieldAlertIcon({ className = 'size-4' }) {
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
       <line x1="12" y1="8" x2="12" y2="12" />
       <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+  )
+}
+
+function ArrowUpRightIcon({ className = 'size-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M7 17 17 7" />
+      <path d="M7 7h10v10" />
     </svg>
   )
 }
