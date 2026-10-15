@@ -261,16 +261,16 @@ function WaterQuality() {
           </div>
 
           {/* Quick controls bar */}
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="grid w-full max-w-[31rem] grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] lg:w-auto lg:min-w-[31rem]">
             {/* Water Quality Health Score Pill */}
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white/95 px-4 py-2.5 shadow-sm backdrop-blur-md">
-              <div className="text-right">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Water Quality Index</p>
-                <p className="text-base font-black text-slate-900 tabular-nums">
+            <div className="flex min-h-16 items-center gap-3 rounded-full border border-slate-200/90 bg-white/95 px-5 py-3 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.28)] backdrop-blur-md">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">Water quality index</p>
+                <p className="mt-0.5 text-xl font-black tracking-tight text-slate-900 tabular-nums">
                   {wqiScore}<span className="text-xs font-bold text-slate-400">/100</span>
                 </p>
               </div>
-              <span className={`grid size-9 place-items-center rounded-xl text-xs font-black ${wqiScore >= 80 ? 'bg-emerald-100 text-emerald-800' : wqiScore >= 60 ? 'bg-amber-100 text-amber-900' : 'bg-rose-100 text-rose-800'}`}>
+              <span className={`ml-auto grid size-10 place-items-center rounded-2xl text-sm font-black ring-1 ring-inset ${wqiScore >= 80 ? 'bg-emerald-100 text-emerald-800 ring-emerald-200' : wqiScore >= 60 ? 'bg-amber-100 text-amber-900 ring-amber-200' : 'bg-rose-100 text-rose-800 ring-rose-200'}`}>
                 {wqiScore >= 80 ? 'A' : wqiScore >= 60 ? 'B' : 'C'}
               </span>
             </div>
@@ -278,19 +278,24 @@ function WaterQuality() {
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/95 px-3.5 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900 active:scale-95 disabled:opacity-50 cursor-pointer"
-              title="Refresh telemetry readings"
+              className="inline-flex min-h-16 cursor-pointer items-center justify-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-5 text-sm font-semibold text-slate-700 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.28)] transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:text-slate-950 hover:shadow-[0_12px_28px_-12px_rgba(15,23,42,0.35)] active:translate-y-0 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60"
+              title={isRefreshing ? 'Syncing telemetry readings' : 'Refresh telemetry readings'}
             >
-              <RefreshIcon className={`size-3.5 ${isRefreshing ? 'animate-spin text-teal-600' : 'text-slate-500'}`} />
-              <span>{isRefreshing ? 'Syncing...' : 'Sync Feed'}</span>
+              <span className="grid size-7 place-items-center rounded-full bg-slate-100 text-slate-500">
+                <RefreshIcon className={`size-4 ${isRefreshing ? 'animate-spin text-teal-600' : ''}`} />
+              </span>
+              <span>{isRefreshing ? 'Syncing…' : 'Sync feed'}</span>
             </button>
 
             <Link
               to="/sensing?view=adaptive"
-              className="inline-flex items-center gap-2 rounded-2xl bg-teal-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md transition hover:bg-teal-700 hover:shadow-lg active:scale-95"
+              className="group inline-flex min-h-14 items-center gap-3 rounded-full bg-gradient-to-r from-teal-600 to-cyan-600 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_-10px_rgba(13,148,136,0.65)] transition hover:-translate-y-0.5 hover:from-teal-700 hover:to-cyan-700 hover:shadow-[0_14px_28px_-10px_rgba(13,148,136,0.7)] active:translate-y-0 active:scale-[0.98] sm:col-span-2"
             >
-              <ActivityIcon className="size-3.5" />
-              <span>Adaptive Settings</span>
+              <span className="grid size-8 place-items-center rounded-full bg-white/15 ring-1 ring-white/20">
+                <ActivityIcon className="size-4" />
+              </span>
+              <span>Adaptive sensing</span>
+              <span className="ml-auto text-lg leading-none text-white/70 transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </div>
@@ -298,7 +303,7 @@ function WaterQuality() {
         {/* Station Switcher Header Tabs */}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 pt-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="mr-1 text-xs font-bold uppercase tracking-wider text-slate-400">Monitoring Station:</span>
+            <span className="mr-1 text-xs font-bold uppercase tracking-wider text-slate-400">Monitoring station</span>
             {SITES_CONFIG.map((s) => {
               const isSelected = site === s.id
               return (
