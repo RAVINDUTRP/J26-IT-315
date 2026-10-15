@@ -2,7 +2,7 @@ import { lazy } from 'react'
 import { motion } from 'framer-motion'
 import { useSearchParams } from 'react-router-dom'
 import { getRecommendations } from '../api'
-import { useData, Pill, Loading, Panel, siteName, urgencyText } from '../components/ui.jsx'
+import { useData, Pill, Loading, Panel, TopicHeader, siteName, urgencyText } from '../components/ui.jsx'
 
 const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
 const AlertsPage = lazy(() => import('./Alerts.jsx'))
@@ -18,11 +18,9 @@ function DecisionSupport() {
 
   return (
     <div className="space-y-6 sm:space-y-7">
-      <motion.header {...enter} transition={{ duration: 0.3 }} className="max-w-3xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">Decision support · field response</p>
-        <h1 className="mt-1 font-sans text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Response priorities</h1>
-        <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">Review each recommended action, its urgency, and the factors that shaped the site ranking.</p>
-      </motion.header>
+      <motion.div {...enter} transition={{ duration: 0.3 }}>
+        <TopicHeader kicker="Kelani Basin response command" status="Field response" statusTone="rose" title="Response Priorities" description="Review recommended actions, urgency, exposed population, and the factors shaping each site ranking." metricLabel="Actions to review" metricValue={recs.reduce((count, item) => count + item.actions.length, 0)} actionLabel="Open response protocol" footer={<><span className="size-2 rounded-full bg-rose-500" /> Priorities support decisions; field teams confirm operational action.</>} />
+      </motion.div>
 
       <div className="space-y-4">
         {recs.map((recommendation, index) => (

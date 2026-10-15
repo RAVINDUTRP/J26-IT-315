@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getNetwork, getObservations, getRisk } from '../api'
-import { Loading, siteName, useData } from '../components/ui.jsx'
+import { Loading, TopicHeader, siteName, useData } from '../components/ui.jsx'
 
 const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
 const monitoredSites = ['ambatale', 'biyagama']
@@ -97,17 +97,9 @@ export default function Alerts() {
 
   return (
     <div className="space-y-6 sm:space-y-7">
-      <motion.header {...enter} transition={{ duration: 0.3 }} className="flex flex-wrap items-end justify-between gap-5 border-b border-slate-200 pb-5 sm:pb-6">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">AquaShield · system notifications</p>
-          <h1 className="mt-1 font-sans text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Alerts &amp; notifications</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">Review current signals from water-quality monitoring, adaptive sensing, and the LoRa mesh.</p>
-        </div>
-        <span className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-semibold ${counts.critical ? 'border-rose-200 bg-rose-50 text-rose-800' : counts.warning ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>
-          <span className={`size-2 rounded-full ${counts.critical ? 'bg-rose-500' : counts.warning ? 'bg-amber-500' : 'bg-emerald-500'}`} />
-          {counts.critical ? 'Critical signals need review' : counts.warning ? 'Monitoring signals need review' : 'No elevated signals'}
-        </span>
-      </motion.header>
+      <motion.div {...enter} transition={{ duration: 0.3 }}>
+        <TopicHeader kicker="AquaShield signal center" status="Live system notifications" statusTone={counts.critical ? 'rose' : counts.warning ? 'amber' : 'emerald'} title="Alerts & Notifications" description="Review current signals from water-quality monitoring, adaptive sensing, resilient communication, and predictive risk analysis." metricLabel="Signals requiring review" metricValue={counts.critical + counts.warning} actionLabel="Review critical signals" footer={<><span className={`size-2 rounded-full ${counts.critical ? 'bg-rose-500' : counts.warning ? 'bg-amber-500' : 'bg-emerald-500'}`} /> {counts.critical ? 'Critical signals need review' : counts.warning ? 'Monitoring signals need review' : 'No elevated signals'}</>} />
+      </motion.div>
 
       <section aria-label="Alert summary" className="grid gap-3 sm:grid-cols-3">
         <SummaryCard label="Current signals" value={counts.all} tone="blue" detail="Generated from latest system data" />

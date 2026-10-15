@@ -226,7 +226,7 @@ export default function AdaptiveSensing() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="flex flex-col justify-between gap-5 border-b border-slate-200/90 pb-6 md:flex-row md:items-center"
+        className="relative grid gap-7 overflow-hidden rounded-[28px] border border-slate-200/90 bg-gradient-to-br from-white via-slate-50/80 to-cyan-50/40 p-5 shadow-[0_12px_35px_-18px_rgba(15,23,42,0.28)] sm:p-7 xl:grid-cols-[minmax(0,1fr)_minmax(330px,0.82fr)] xl:items-center"
       >
         <div>
           <div className="flex items-center gap-2">
@@ -237,17 +237,17 @@ export default function AdaptiveSensing() {
             <span className="text-xs font-medium text-slate-400">|</span>
             <span className="text-xs font-medium text-slate-500">EWMA Dynamic Cadence Controller</span>
           </div>
-          <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+          <h1 className="mt-4 font-serif text-4xl leading-[1.02] tracking-tight text-slate-950 sm:text-5xl">
             Adaptive Sensing &amp; Dynamic Rate Engine
           </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Intelligent sampling rate regulation balancing hydrological anomaly capture with node battery longevity.
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+            Automatically adjust the sampling cadence so the network captures important river changes without exhausting field-node batteries.
           </p>
         </div>
 
         {/* Station Switcher */}
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:min-w-[28rem]">
-          <div className="flex rounded-2xl bg-slate-200/70 p-1.5 shadow-inner">
+          <div className="flex rounded-2xl bg-slate-200/70 p-1.5 shadow-inner" aria-label="Choose monitoring station">
             {SITES.map((st) => (
               <button
                 key={st.id}
@@ -286,6 +286,19 @@ export default function AdaptiveSensing() {
               <span className="size-1.5 rounded-full bg-emerald-500" />
               Connected
             </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-2xl border border-cyan-100 bg-cyan-50/70 px-4 py-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-cyan-700">Current cadence</p>
+              <p className="mt-1 text-lg font-bold text-slate-900">{currentIntervalMin} min</p>
+              <p className="text-xs text-slate-500">{currentTierConfig.name}</p>
+            </div>
+            <div className="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700">Battery estimate</p>
+              <p className="mt-1 text-lg font-bold text-slate-900">{currentSiteInfo.battery}%</p>
+              <p className="text-xs text-slate-500">Node readiness</p>
+            </div>
           </div>
         </div>
       </motion.div>
