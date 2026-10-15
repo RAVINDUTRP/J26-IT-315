@@ -34,8 +34,8 @@ export default function App() {
           className="sticky top-0 flex h-screen min-h-[620px] flex-col gap-8 overflow-y-auto border-r border-[#202a3c] bg-[#080e1d] px-5 py-7 text-[#f5f7fb] max-lg:static max-lg:h-auto max-lg:min-h-0 max-lg:gap-5"
         >
         <Link to="/" className="flex items-center gap-3.5 px-0.5">
-          <span aria-hidden="true" className="grid size-14 shrink-0 place-items-center rounded-[13px] bg-gradient-to-br from-[#3979ff] to-[#04bfd1] text-white">
-            <Icon name="shield" className="size-8" />
+          <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-[13px] bg-[#111827] shadow-[0_8px_20px_-8px_rgba(8,184,220,0.7)]">
+            <img src="/aquashield-logo.svg" alt="" className="size-12 object-contain" />
           </span>
           <span className="flex min-w-0 flex-col">
             <span className="text-[23px] font-bold leading-[1.15] tracking-[-0.5px] text-[#f5f7fb]">AquaShield</span>
