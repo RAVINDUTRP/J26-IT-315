@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { getNetwork } from '../api'
 import { useData, Loading, Panel } from '../components/ui.jsx'
+import '../styles.css'
 
 const inPath = (path = [], a, b) => {
   const i = path.indexOf(a)
@@ -68,9 +69,10 @@ const healthyCount = net.nodes.filter(
 
   return (
     <>
-      <header className="page-head">
-        <div className="row-head">
+      <header className="page-head network-hero">
+        <div className="row-head network-hero-row">
           <div>
+            <div className="eyebrow"><span className={`status-dot ${failedNodes.length ? 'status-dot-warning' : ''}`} /> {recoveryStatus} network</div>
             <h1>Resilient LoRa Mesh</h1>
             <p className="lede">
               Self-healing multi-hop communication for water-quality
@@ -79,7 +81,7 @@ const healthyCount = net.nodes.filter(
             </p>
           </div>
 
-          <button className="action-button" onClick={simulateFailure}>
+          <button className="action-button network-action" onClick={simulateFailure}>
             {failedNode ? 'Restore R4' : 'Simulate R4 failure'}
           </button>
         </div>
@@ -94,42 +96,47 @@ const healthyCount = net.nodes.filter(
         )}
       </header>
 
-      <div className="tiles">
-        <div className="tile">
+      <div className="tiles network-metrics">
+        <div className="tile network-metric">
           <span className="muted small">Packet delivery ratio</span>
-          <strong>{net.pdr_percent}<small> %</small></strong>
+          <strong>{net.pdr_percent}<small>%</small></strong>
+          <span className="metric-hint">Reliable delivery</span>
         </div>
-        <div className="tile">
+        <div className="tile network-metric">
           <span className="muted small">End-to-end delay</span>
-          <strong>{net.latency_ms}<small> ms</small></strong>
+          <strong>{net.latency_ms}<small>ms</small></strong>
+          <span className="metric-hint">Across active route</span>
         </div>
-        <div className="tile">
+        <div className="tile network-metric">
           <span className="muted small">Recovery time</span>
-          <strong>{net.recovery_s}<small> s</small></strong>
+          <strong>{net.recovery_s}<small>s</small></strong>
+          <span className="metric-hint">Automatic rerouting</span>
         </div>
-        <div className="tile">
+        <div className="tile network-metric">
           <span className="muted small">Energy estimate</span>
-          <strong>{net.energy_mwh}<small> mWh</small></strong>
+          <strong>{net.energy_mwh}<small>mWh</small></strong>
+          <span className="metric-hint">Per transmission</span>
         </div>
-        <div className="tile">
+        <div className="tile network-metric">
           <span className="muted small">Route switches</span>
           <strong>{net.route_switch_count}</strong>
+          <span className="metric-hint">Since monitoring began</span>
         </div>
       </div>
-      <div className="tiles">
-  <div className="tile">
+      <div className="tiles network-summary">
+  <div className="tile summary-tile">
     <span className="muted small">Healthy Nodes</span>
     <strong style={{ color: '#2f7d5c' }}>{healthyCount}</strong>
     <span className="muted small">Health above 75%</span>
   </div>
 
-  <div className="tile">
+  <div className="tile summary-tile">
     <span className="muted small">High-Risk Nodes</span>
     <strong style={{ color: '#c58a2c' }}>{highRiskCount}</strong>
     <span className="muted small">Predicted risk ≥ 65%</span>
   </div>
 
-  <div className="tile">
+  <div className="tile summary-tile">
     <span className="muted small">Failed Nodes</span>
     <strong style={{ color: '#b1362e' }}>{failedCount}</strong>
     <span className="muted small">Nodes currently failed</span>
@@ -137,7 +144,7 @@ const healthyCount = net.nodes.filter(
 </div>
 
       
-<div className="two">
+<div className="two network-section">
   <Panel
     title="Network Recovery Diagnostics"
     note="Live diagnostics calculated from the current network response."
@@ -250,7 +257,7 @@ const healthyCount = net.nodes.filter(
   </Panel>
 </div>
 
-      <div className="two">
+      <div className="two network-section">
         <Panel
           title="Mesh topology"
           note="Node roles, link availability and communication routes."
@@ -447,7 +454,7 @@ const healthyCount = net.nodes.filter(
         </Panel>
       </div>
 
-      <div className="two">
+      <div className="two network-section">
         <Panel
           title="Self-Healing Route Recovery"
           note={`Mechanism: ${net.routing?.algorithm || 'Route recovery'}`}

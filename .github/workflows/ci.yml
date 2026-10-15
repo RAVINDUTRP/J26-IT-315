@@ -6,6 +6,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Keep this workflow owned by the integration maintainer. Feature branches should
+# change application files only and rely on this workflow through their PR.
 permissions:
   contents: read
 
