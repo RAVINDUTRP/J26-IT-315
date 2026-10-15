@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { getNetwork } from '../api'
-import { useData, Loading, Panel } from '../components/ui.jsx'
+import { useData, Loading, Panel, TopicHeader } from '../components/ui.jsx'
 import '../styles.css'
 
 const inPath = (path = [], a, b) => {
@@ -69,22 +69,7 @@ const healthyCount = net.nodes.filter(
 
   return (
     <>
-      <header className="page-head network-hero">
-        <div className="row-head network-hero-row">
-          <div>
-            <div className="eyebrow"><span className={`status-dot ${failedNodes.length ? 'status-dot-warning' : ''}`} /> {recoveryStatus} network</div>
-            <h1>Resilient LoRa Mesh</h1>
-            <p className="lede">
-              Self-healing multi-hop communication for water-quality
-              telemetry when cellular or public internet infrastructure
-              is unavailable.
-            </p>
-          </div>
-
-          <button className="action-button network-action" onClick={simulateFailure}>
-            {failedNode ? 'Restore R4' : 'Simulate R4 failure'}
-          </button>
-        </div>
+      <TopicHeader kicker="Kelani Basin field telemetry" status={`${recoveryStatus} mesh network`} statusTone={failedNodes.length ? 'amber' : 'emerald'} title="Resilient LoRa Mesh Network" description="Self-healing multi-hop communication keeps water-quality telemetry moving when cellular or public internet infrastructure is unavailable." metricLabel="Active route hops" metricValue={activeHops} actionLabel={failedNode ? 'Restore R4 node' : 'Simulate R4 failure'} onAction={simulateFailure} footer={<><span className={`size-2 rounded-full ${failedNodes.length ? 'bg-amber-500' : 'bg-emerald-500'}`} /> {failedNodes.length ? 'Degraded route protection active.' : 'All monitored nodes are communicating normally.'}</>}>
 
         {failing.length > 0 && (
           <p className="alert-line">
@@ -94,7 +79,7 @@ const healthyCount = net.nodes.filter(
             communication through an available path.
           </p>
         )}
-      </header>
+      </TopicHeader>
 
       <div className="tiles network-metrics">
         <div className="tile network-metric">

@@ -105,7 +105,7 @@ export default function Dashboard() {
               </span>
             </div>
 
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            <h1 className="font-serif text-4xl leading-[1.02] tracking-tight text-slate-950 sm:text-5xl">
               Water Safety &amp; Risk Command Center
             </h1>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -123,7 +123,7 @@ export default function Dashboard() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400/60" />
                 <span className="relative inline-flex size-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/10" />
               </span>
-              <span className="text-sm font-medium text-slate-500">Last telemetry</span>
+              <span className="text-sm font-medium text-slate-500">Last telemetry received</span>
               <time className="ml-auto text-base font-bold tracking-tight text-slate-800 tabular-nums">
                 {lastSyncTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
               </time>
@@ -148,7 +148,7 @@ export default function Dashboard() {
               <span className="grid size-8 place-items-center rounded-full bg-amber-400/15 ring-1 ring-amber-300/20">
                 <ShieldAlertIcon className="size-4 text-amber-300" />
               </span>
-              <span>Response protocol</span>
+              <span className="whitespace-nowrap text-sm font-semibold text-white">Response protocol</span>
               <ArrowUpRightIcon className="ml-auto size-4 text-slate-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
             </Link>
           </div>
@@ -156,7 +156,7 @@ export default function Dashboard() {
 
         {/* Quick Station Switcher Tabs */}
         <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-slate-200/80 pt-4">
-          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-slate-400">Monitoring Station:</span>
+          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-slate-400">Focus station</span>
           {SITES_CONFIG.map((site) => {
             const isSelected = selectedSite === site.id
             const siteRisk = riskBySite[site.id]?.risk_category || 'low'
@@ -171,7 +171,10 @@ export default function Dashboard() {
                 }`}
               >
                 <span className={`size-2 rounded-full ${isSelected ? 'bg-white' : siteRisk === 'critical' ? 'bg-rose-500' : siteRisk === 'moderate' ? 'bg-amber-500' : 'bg-emerald-500'}`} />
-                <span>{site.name}</span>
+                <span className="text-left">
+                  <span className="block">{site.name}</span>
+                  <span className={`block text-[10px] font-medium ${isSelected ? 'text-white/70' : 'text-slate-400'}`}>{site.role}</span>
+                </span>
                 <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-bold ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'}`}>
                   {site.pop}
                 </span>

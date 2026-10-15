@@ -252,7 +252,7 @@ function WaterQuality() {
               </span>
             </div>
 
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            <h1 className="font-serif text-4xl leading-[1.02] tracking-tight text-slate-950 sm:text-5xl">
               Water Quality Telemetry &amp; Diagnostics
             </h1>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">

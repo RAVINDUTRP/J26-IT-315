@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from 'recharts'
 import { getRisk } from '../api'
-import { useData, Pill, Loading, Panel, siteName } from '../components/ui.jsx'
+import { useData, Pill, Loading, Panel, TopicHeader, siteName } from '../components/ui.jsx'
 
 const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
 
@@ -11,13 +11,9 @@ export default function Prediction() {
 
   return (
     <div className="space-y-6 sm:space-y-7">
-      <motion.header {...enter} transition={{ duration: 0.3 }} className="max-w-3xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-700">Predictive analysis · research model</p>
-        <h1 className="mt-1 font-sans text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Risk forecast</h1>
-        <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">
-          Expected contamination risk over the next {risk[0]?.horizon_h ?? 6} hours, with the factors behind each score. Factors describe the model, not proven causes.
-        </p>
-      </motion.header>
+      <motion.div {...enter} transition={{ duration: 0.3 }}>
+        <TopicHeader kicker="Kelani Basin predictive intelligence" status="Research model" statusTone="violet" title="Contamination Risk Forecast" description={`Expected contamination risk over the next ${risk[0]?.horizon_h ?? 6} hours, with explainable factors behind each score.`} metricLabel="Forecast horizon" metricValue={`${risk[0]?.horizon_h ?? 6}h`} actionLabel="Review model factors" footer={<><span className="size-2 rounded-full bg-violet-500" /> Model estimates require confirmatory field sampling.</>} />
+      </motion.div>
 
       <div className="space-y-4">
         {risk.map((assessment, index) => (
