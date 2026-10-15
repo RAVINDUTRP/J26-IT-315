@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { getNetwork } from '../api'
 import { useData, Loading, Panel } from '../components/ui.jsx'
+import '../styles.css'
 
 const inPath = (path = [], a, b) => {
   const i = path.indexOf(a)
