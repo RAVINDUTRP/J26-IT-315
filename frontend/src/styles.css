@@ -39,6 +39,12 @@ a { color: inherit; text-decoration: none; }
 .main { padding: 36px 40px 60px; max-width: 1180px; }
 .page-head { margin-bottom: 24px; }
 .lede { max-width: 66ch; color: #34505a; margin: 8px 0 0; font-size: 16px; }
+.network-hero { padding: 28px 30px; border: 1px solid #c9dce2; border-radius: 18px; background: linear-gradient(135deg, #f8fcfd 0%, #e4f2f4 100%); box-shadow: 0 12px 28px rgba(20, 49, 59, .08); }
+.network-hero-row { align-items: flex-start; }
+.network-hero h1 { margin-top: 6px; }
+.eyebrow { display: flex; align-items: center; gap: 8px; color: var(--ok); font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px rgba(47, 125, 92, .14); }
+.status-dot-warning { background: var(--silt); box-shadow: 0 0 0 4px rgba(197, 138, 44, .16); }
 
 .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 24px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
 .flow-step { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; border-right: 1px solid var(--line); font-size: 14px; }
@@ -63,6 +69,14 @@ a { color: inherit; text-decoration: none; }
 .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; }
 .tile strong { font: 700 26px 'Spectral', Georgia, serif; }
 .tile small { font: 400 13px 'Public Sans', sans-serif; color: var(--muted); }
+.network-metrics { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 18px; }
+.network-metric { min-height: 112px; padding: 16px; border: 0; box-shadow: 0 5px 16px rgba(20, 49, 59, .07); }
+.network-metric strong { display: flex; align-items: baseline; gap: 5px; margin: 7px 0 3px; font-size: 30px; }
+.network-metric strong small { font-size: 13px; }
+.metric-hint { color: var(--muted); font-size: 12px; }
+.network-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.summary-tile { border-radius: 12px; background: #f7fafb; }
+.network-section { margin-top: 16px; }
 
 table { width: 100%; border-collapse: collapse; }
 th { text-align: left; font-weight: 600; font-size: 13px; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
@@ -100,10 +114,16 @@ tr:last-child td { border-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
-.action-button { margin-left: auto; border: 0; border-radius: 8px; padding: 10px 14px; background: var(--ink); color: #fff; cursor: pointer; font: inherit; font-weight: 600; }
+.action-button { margin-left: auto; border: 0; border-radius: 10px; padding: 11px 16px; background: var(--ink); color: #fff; cursor: pointer; font: inherit; font-weight: 600; box-shadow: 0 6px 12px rgba(20, 49, 59, .16); }
 .action-button:hover { background: #1d5262; }
 .alert-line { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; background: #fbeceb; color: #8c241d; font-size: 14px; }
 .pipeline { display: flex; flex-direction: column; align-items: stretch; gap: 7px; }
 .pipeline span { padding: 9px 12px; border: 1px solid var(--line); border-radius: 7px; background: #f7fafb; font-size: 13px; }
 .pipeline b { text-align: center; color: var(--river); }
 @media (max-width: 700px) { .action-button { margin-left: 0; } }
+@media (max-width: 1050px) { .network-metrics { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) {
+  .network-hero { padding: 22px 18px; }
+  .network-metrics, .network-summary { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 460px) { .network-metrics, .network-summary { grid-template-columns: 1fr; } }
