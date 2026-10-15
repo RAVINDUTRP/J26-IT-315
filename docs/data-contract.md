@@ -15,4 +15,4 @@ Each component implements ONE entry function; the backend router calls it:
 | C3 | `component3_prediction.src.predict.assess(history_df)` | recent observations + rainfall | RiskAssessment |
 | C4 | `component4_decision.src.recommender.recommend(assessments, resources, comm_status)` | list of RiskAssessment | list of Recommendation |
 
-Sites used in the demo: Ambatale, Biyagama, Hanwella (Kelani River). Replace with your real sites later.
+Sites used in the demo: Ambatale, Biyagama (Kelani River).
