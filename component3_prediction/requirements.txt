@@ -3,6 +3,8 @@ numpy
 scikit-learn
 xgboost
 shap
-lime
 joblib
 jupyter
+streamlit
+matplotlib
+jsonschema
