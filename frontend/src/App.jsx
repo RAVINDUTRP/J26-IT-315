@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)]">
+      <div className="grid min-h-screen grid-cols-1 bg-[#f8fafc] text-slate-900 lg:grid-cols-[290px_minmax(0,1fr)]">
         <motion.aside
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
@@ -85,7 +85,7 @@ export default function App() {
           </div>
         </div>
         </motion.aside>
-        <main className="min-w-0 max-w-[1180px] px-10 pt-9 pb-[60px] max-[900px]:max-w-none max-[900px]:px-[18px] max-[900px]:pt-6 max-[900px]:pb-12">
+        <main className="min-w-0 w-full max-w-[1520px] px-6 py-8 sm:px-8 lg:px-10 lg:py-8">
           <Suspense fallback={<div className="grid min-h-64 place-items-center text-sm text-slate-400" role="status">Loading page…</div>}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
