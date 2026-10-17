@@ -55,7 +55,7 @@ def risk():
     for sid, (score, cat, conf, anom) in spec.items():
         out.append({
             "site_id": sid, "timestamp": now().isoformat(), "location": SITES[sid], "horizon_h": 6,
-            "risk_score": score, "risk_category": cat, "confidence": conf,
+            "risk_score": score, " risk_category ": cat, "confidence": conf,
             "explanation": [
                 {"feature": "Accumulated rainfall (6h)", "contribution": round(0.31 * score, 3)},
                 {"feature": "Rainfall increase rate", "contribution": round(0.22 * score, 3)},
