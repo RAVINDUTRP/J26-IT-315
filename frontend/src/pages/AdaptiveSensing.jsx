@@ -296,7 +296,7 @@ export default function AdaptiveSensing() {
             </div>
             <div className="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-3">
               <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700">Battery estimate</p>
-              <p className="mt-1 text-lg font-bold text-slate-900">{currentSiteInfo.battery}%</p>
+              <p className="mt-1 text-lg font-bold text-slate-900">{effectiveBattery}%</p>
               <p className="text-xs text-slate-500">Node readiness</p>
             </div>
           </div>
@@ -331,8 +331,8 @@ export default function AdaptiveSensing() {
                 Sampling Every {currentIntervalMin} min ({currentIntervalSec}s)
               </span>
             </div>
-            <p className="mt-0.5 text-xs text-slate-500 sm:text-sm">
-              <span className="font-medium text-slate-700">Trigger Rationale:</span>{' '}
+            <p className="mt-1 text-xs leading-5 text-slate-500 sm:text-sm">
+              <span className="font-medium text-slate-700">Why this cadence:</span>{' '}
               {operatingMode === 'sandbox'
                 ? `Interactive sandbox active (Simulated rain: ${sandboxRain} mm/h, Battery: ${sandboxBattery}%)`
                 : (rawLatest.sampling?.reasons || []).join(' · ') || 'Precipitation and turbidity within baseline.'}
@@ -341,9 +341,13 @@ export default function AdaptiveSensing() {
         </div>
 
         {/* Operating Mode Buttons */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex rounded-xl bg-slate-100 p-1 text-xs font-semibold text-slate-600">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
+          <div>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Control mode</p>
+            <div className="flex max-w-full flex-wrap rounded-xl bg-slate-100 p-1 text-xs font-semibold text-slate-600">
             <button
+              type="button"
+              aria-pressed={operatingMode === 'auto'}
               onClick={() => setOperatingMode('auto')}
               className={`rounded-lg px-3 py-1.5 transition ${
                 operatingMode === 'auto' ? 'bg-white text-slate-900 shadow-sm' : 'hover:text-slate-900'
@@ -352,6 +356,8 @@ export default function AdaptiveSensing() {
               AI Autonomous
             </button>
             <button
+              type="button"
+              aria-pressed={operatingMode === 'force_storm'}
               onClick={() => setOperatingMode('force_storm')}
               className={`rounded-lg px-3 py-1.5 transition ${
                 operatingMode === 'force_storm' ? 'bg-rose-50 text-rose-800 shadow-sm' : 'hover:text-slate-900'
@@ -360,6 +366,8 @@ export default function AdaptiveSensing() {
               Force 2-min
             </button>
             <button
+              type="button"
+              aria-pressed={operatingMode === 'force_eco'}
               onClick={() => setOperatingMode('force_eco')}
               className={`rounded-lg px-3 py-1.5 transition ${
                 operatingMode === 'force_eco' ? 'bg-emerald-50 text-emerald-800 shadow-sm' : 'hover:text-slate-900'
@@ -368,6 +376,8 @@ export default function AdaptiveSensing() {
               Force 30-min
             </button>
             <button
+              type="button"
+              aria-pressed={operatingMode === 'sandbox'}
               onClick={() => setOperatingMode('sandbox')}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition ${
                 operatingMode === 'sandbox' ? 'bg-cyan-600 text-white shadow-sm' : 'hover:text-slate-900'
@@ -379,6 +389,7 @@ export default function AdaptiveSensing() {
               </svg>
               <span>Sandbox Slider</span>
             </button>
+            </div>
           </div>
         </div>
       </motion.div>
