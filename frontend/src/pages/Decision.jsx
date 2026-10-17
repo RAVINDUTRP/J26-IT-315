@@ -56,7 +56,7 @@ function DecisionSupport() {
 
                 <section aria-label="Ranking factors" className="rounded-xl bg-slate-50 p-4">
                   <h3 className="mb-3 text-sm font-semibold text-slate-800">What drove the ranking</h3> 
-                  {recommendation.factors.length === 0 && <p className="text-sm text-slate-500">Factor weights appear here once Component 4 provides them.</p>}
+                  {recommendation.factors.length === 0 && <p className="text-sm text-slate-500">Factor weights appear here once Component_4 provides them.</p>}
                   <div className="space-y-3">
                     {recommendation.factors.map((factor) => (
                       <div key={factor.name} className="grid grid-cols-[minmax(0,1fr)_minmax(70px,120px)_36px] items-center gap-2 text-xs">
