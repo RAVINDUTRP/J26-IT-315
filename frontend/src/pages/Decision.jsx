@@ -14,7 +14,7 @@ export default function Decision() {
 
 function DecisionSupport() {
   const recs = useData(getRecommendations)
-  if (!recs) return <Loading />
+  if (!recs) return <Loading /> 
 
   return (
     <div className="space-y-6 sm:space-y-7">
