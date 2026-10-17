@@ -8,13 +8,13 @@ const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
 const AlertsPage = lazy(() => import('./Alerts.jsx'))
 
 export default function Decision() {
-  const [searchParams] = useSearchParams()
+  const [searchParams] = useSearchParams() 
   return searchParams.get('view') === 'alerts' ? <AlertsPage /> : <DecisionSupport />
 }
 
 function DecisionSupport() {
   const recs = useData(getRecommendations)
-  if (!recs) return <Loading />
+  if (!recs) return <Loading /> 
 
   return (
     <div className="space-y-6 sm:space-y-7">
@@ -36,14 +36,14 @@ function DecisionSupport() {
               <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(260px,0.8fr)]">
                 <section aria-label={`Recommended actions for ${siteName(recommendation.site_id)}`}>
                   <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Recommended actions</h3>
-                  <ol className="space-y-4">
+                  <ol className="space-y-4"> 
                     {recommendation.actions.map((action, actionIndex) => (
                       <li key={action.action} className="flex gap-3">
                         <span className="grid size-7 shrink-0 place-items-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600">{actionIndex + 1}</span>
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
                             <strong className="text-sm font-semibold text-slate-900">{action.action}</strong>
-                            <UrgencyBadge urgency={action.urgency} />
+                            <UrgencyBadge urgency={action.urgency} /> 
                           </div>
                           <p className="mt-1 text-sm leading-5 text-slate-600">{action.rationale}</p>
                         </div>
@@ -53,8 +53,8 @@ function DecisionSupport() {
                 </section>
 
                 <section aria-label="Ranking factors" className="rounded-xl bg-slate-50 p-4">
-                  <h3 className="mb-3 text-sm font-semibold text-slate-800">What drove the ranking</h3>
-                  {recommendation.factors.length === 0 && <p className="text-sm text-slate-500">Factor weights appear here once Component 4 provides them.</p>}
+                  <h3 className="mb-3 text-sm font-semibold text-slate-800">What drove the ranking</h3> 
+                  {recommendation.factors.length === 0 && <p className="text-sm text-slate-500">Factor weights appear here once Component_4 provides them.</p>}
                   <div className="space-y-3">
                     {recommendation.factors.map((factor) => (
                       <div key={factor.name} className="grid grid-cols-[minmax(0,1fr)_minmax(70px,120px)_36px] items-center gap-2 text-xs">
@@ -77,7 +77,7 @@ function DecisionSupport() {
 }
 
 function UrgencyBadge({ urgency }) {
-  const style = {
+  const style = { 
     now: 'bg-rose-50 text-rose-800 ring-rose-200',
     within_1h: 'bg-amber-50 text-amber-800 ring-amber-200',
     within_6h: 'bg-sky-50 text-sky-800 ring-sky-200',
