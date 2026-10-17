@@ -45,7 +45,7 @@ function DecisionSupport() {
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
                             <strong className="text-sm font-semibold text-slate-900">{action.action}</strong>
-                            <UrgencyBadge urgency={action.urgency} />
+                            <UrgencyBadge urgency={action.urgency} /> 
                           </div>
                           <p className="mt-1 text-sm leading-5 text-slate-600">{action.rationale}</p>
                         </div>
