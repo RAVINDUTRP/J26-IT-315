@@ -38,7 +38,7 @@ function DecisionSupport() {
               <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(260px,0.8fr)]">
                 <section aria-label={`Recommended actions for ${siteName(recommendation.site_id)}`}>
                   <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Recommended actions</h3>
-                  <ol className="space-y-4">
+                  <ol className="space-y-4"> 
                     {recommendation.actions.map((action, actionIndex) => (
                       <li key={action.action} className="flex gap-3">
                         <span className="grid size-7 shrink-0 place-items-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600">{actionIndex + 1}</span>
