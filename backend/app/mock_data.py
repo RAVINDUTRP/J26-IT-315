@@ -39,7 +39,7 @@ def network():
         {"id": "R1", "role": "relay", "health": 0.84, "battery": 69, "rssi": -91, "snr": 5.1},
         {"id": "R2", "role": "relay", "health": 0.93, "battery": 88, "rssi": -79, "snr": 8.4},
         {"id": "R3", "role": "relay", "health": 0.86, "battery": 74, "rssi": -90, "snr": 5.5},
-        {"id": "R4", "role": "relay", "health": 0.38, "battery": 19, "rssi": -108, "snr": -2.0, "predicted_failure": 0.82},
+        {"id": "R4", "role": "relay", "health": 0.38, "battery": 19, "rssi": -108, "snr": -2.0, "predicted_failure": 0.82}, 
         {"id": "R5", "role": "relay", "health": 0.9, "battery": 83, "rssi": -81, "snr": 7.9},
         {"id": "GW", "role": "gateway", "health": 0.97, "battery": 100, "rssi": -70, "snr": 10.0},
     ]
