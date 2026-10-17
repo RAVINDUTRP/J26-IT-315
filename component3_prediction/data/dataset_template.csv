@@ -1,0 +1,2 @@
+timestamp,location_id,pH,turbidity,electrical_conductivity,TDS,water_temperature,rainfall_mm,sensor_confidence,contamination_label
+2026-01-01T00:00:00Z,site-001,7.1,8.2,220,140,27.0,0.0,0.95,0
