@@ -79,7 +79,7 @@ function DecisionSupport() {
 }
 
 function UrgencyBadge({ urgency }) {
-  const style = {
+  const style = { 
     now: 'bg-rose-50 text-rose-800 ring-rose-200',
     within_1h: 'bg-amber-50 text-amber-800 ring-amber-200',
     within_6h: 'bg-sky-50 text-sky-800 ring-sky-200',
