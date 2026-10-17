@@ -5,7 +5,7 @@ import math
 SITES = {
     "ambatale": {"name": "Ambatale intake", "lat": 6.9547, "lon": 79.9617, "population": 420000},
     "biyagama": {"name": "Biyagama", "lat": 6.9500, "lon": 79.9990, "population": 180000},
-    "hanwella": {"name": "Hanwella", "lat": 6.9019, "lon": 80.0820, "population": 60000},
+    "hanwella": {"name": "Hanwella", "lat": 6.9019, "lon": 80.0820, "population": 60000}, 
 }
 _BASE = {"ambatale": 1.0, "biyagama": 0.6, "hanwella": 0.3}
 
