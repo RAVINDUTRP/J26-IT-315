@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">AquaShield logo</title>
+  <desc id="desc">A blue and cyan shield surrounding a water droplet and wave.</desc>
+  <defs>
+    <linearGradient id="shield" x1="42" y1="32" x2="210" y2="224" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1769ff"/>
+      <stop offset="1" stop-color="#11c8c4"/>
+    </linearGradient>
+    <linearGradient id="drop" x1="81" y1="75" x2="171" y2="177" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08c9e8"/>
+      <stop offset="1" stop-color="#1450dc"/>
+    </linearGradient>
+  </defs>
+  <path fill="none" stroke="url(#shield)" stroke-linecap="round" stroke-linejoin="round" stroke-width="25" d="M128 20 220 67v66c0 45-32 79-92 103-60-24-92-58-92-103V67l92-47Z"/>
+  <path fill="url(#drop)" d="M128 64c-18 27-46 58-46 88 0 28 20 51 46 51s46-23 46-51c0-30-28-61-46-88Z"/>
+  <path fill="none" stroke="#17191f" stroke-linecap="round" stroke-width="12" d="M102 131c-11 17-7 35 10 45"/>
+  <path fill="none" stroke="url(#shield)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18" d="M35 211c35-28 66-24 94-7 33 20 65 25 94-8"/>
+  <path fill="none" stroke="url(#shield)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M67 231c21-2 39 4 61 20 22-16 41-22 61-20"/>
+</svg>

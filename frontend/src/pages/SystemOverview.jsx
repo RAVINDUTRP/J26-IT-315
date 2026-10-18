@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { TopicHeader } from '../components/ui.jsx'
 
 const stages = [
   {
@@ -54,23 +55,9 @@ const toneStyles = {
 export default function SystemOverview() {
   return (
     <div className="space-y-7 sm:space-y-8">
-      <motion.header
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="flex flex-wrap items-end justify-between gap-5 border-b border-slate-200 pb-6"
-      >
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">AquaShield · system map</p>
-          <h1 className="mt-1 font-sans text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">System overview</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">
-            How field sensing, resilient communication, contamination-risk research, and response planning fit together for Kelani Basin monitoring.
-          </p>
-        </div>
-        <span className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800">
-          <span className="size-2 rounded-full bg-amber-500" /> Research prototype · demo data
-        </span>
-      </motion.header>
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+        <TopicHeader kicker="AquaShield control architecture" status="Research prototype" statusTone="blue" title="System Overview" description="See how field sensing, resilient communication, contamination-risk research, and response planning work together across the Kelani Basin." metricLabel="Pipeline stages" metricValue="04" actionLabel="Explore system flow" footer={<><span className="size-2 rounded-full bg-blue-500" /> One shared data flow from river observation to response.</>} />
+      </motion.div>
 
       <section aria-labelledby="system-flow-title" className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">

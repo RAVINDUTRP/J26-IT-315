@@ -34,3 +34,65 @@ To make the UI call the backend instead of its built-in mock data, copy `fronten
 - Contracts first: if you need a new field, change `shared/contracts/*.json` and `docs/data-contract.md`, then tell the others.
 - Branches: `main` (stable), `compN/feature-name` (your work). Open a PR into `main`.
 - Each component exposes one function that the backend router calls, so integration stays simple (see each component README).
+
+
+## Component 2 development
+
+Component 2 now exposes a research-testable communication pipeline:
+
+`water telemetry -> compact binary packet -> rolling-key XOR protection -> adaptive multi-hop routing -> gateway decode -> dashboard`
+
+### C2 Python tests
+
+```powershell
+cd component2_comms
+python -m pytest
+```
+
+### C2 simulation
+
+From repository root:
+
+```powershell
+python -m component2_comms.simulation.mesh_sim
+```
+
+### Backend + frontend
+
+Terminal 1:
+
+```powershell
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+Terminal 2:
+
+```powershell
+cd frontend
+npm install
+Copy-Item .env.example .env
+npm run dev
+```
+
+For backend-backed Component 2 data, `.env` should contain:
+
+```env
+VITE_USE_API=true
+VITE_API_URL=http://localhost:8000
+```
+
+Open `http://localhost:5173/network`. The Network page includes adaptive route ranking, node health, PDR, latency, energy, recovery time and a controlled failure simulation.
+
+### C2 API
+
+- `GET /api/c2/network`
+- `GET /api/c2/network?failed_node=R4`
+- `GET /api/c2/metrics`
+- `GET /api/c2/experiment?runs=20`
+- `GET /api/c2/packet-demo`
+
+The dashboard is intentionally a research/demo interface; hardware field deployment still requires the actual Ra-02 wiring, legal frequency, node IDs and radio parameters to be confirmed.
