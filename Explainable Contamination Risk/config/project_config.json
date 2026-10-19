@@ -1,0 +1,61 @@
+{
+  "project_name": "Component_03_Contamination_Risk",
+  "project_title": "Adaptive Environmental Intelligence for Early Water Contamination Detection and Disaster Response",
+  "component_name": "Component 03: Hybrid Explainable Contamination Risk Prediction Framework",
+  "random_seed": 42,
+  "timezone": "Asia/Colombo",
+  "prediction_horizon_hours": 3,
+  "sensor_sampling_interval_minutes": 15,
+  "simulation_duration_days": 365,
+  "locations": {
+    "SITE_001": {
+      "name": "Kelani River - Estuary / Direct Base Station",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "elevation_m": 4.5,
+      "upstream_catchment_km2": 2230
+    },
+    "SITE_002": {
+      "name": "Kelani River - Mid-Reach (Repeater 01 Link)",
+      "latitude": 6.9385,
+      "longitude": 79.8920,
+      "elevation_m": 7.8,
+      "upstream_catchment_km2": 2180
+    },
+    "SITE_003": {
+      "name": "Kelani River - Upper Industrial Inflow (Repeater 02 Link)",
+      "latitude": 6.9550,
+      "longitude": 79.9240,
+      "elevation_m": 12.0,
+      "upstream_catchment_km2": 2090
+    },
+    "SITE_004": {
+      "name": "Hamilton Canal Confluence (Tidal Mixing Zone)",
+      "latitude": 6.9810,
+      "longitude": 79.8750,
+      "elevation_m": 3.0,
+      "upstream_catchment_km2": 450
+    }
+  },
+  "risk_thresholds": {
+    "low_max_score": 35.0,
+    "medium_max_score": 70.0,
+    "high_min_score": 70.0
+  },
+  "open_meteo": {
+    "forecast_api_url": "https://api.open-meteo.com/v1/forecast",
+    "historical_api_url": "https://archive-api.open-meteo.com/v1/archive",
+    "request_timeout_seconds": 12,
+    "cache_expiry_hours": 6
+  },
+  "paths": {
+    "raw_data": "data/raw",
+    "external_data": "data/external",
+    "interim_data": "data/interim",
+    "processed_data": "data/processed",
+    "inference_samples": "data/inference_samples",
+    "models": "models",
+    "plots": "plots",
+    "outputs": "outputs"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1055283234675",
+    "firebase_url": "https://boat-research-e08fb-default-rtdb.firebaseio.com",
+    "project_id": "boat-research-e08fb",
+    "storage_bucket": "boat-research-e08fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055283234675:android:3afc5549c1ea7cfd32e706",
+        "android_client_info": {
+          "package_name": "com.aquashield.aquashield"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh-WN7sMWTS08PkCyHoy82a88rGfH9e1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

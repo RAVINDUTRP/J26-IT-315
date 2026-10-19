@@ -1,0 +1,43 @@
+# Configurable Rule-Based Prioritization Engine Settings
+# Component 04: AI-Based Disaster Decision Support Framework
+
+scoring_weights:
+  contamination_weight: 0.35
+  population_weight: 0.25
+  infrastructure_weight: 0.20
+  environmental_change_weight: 0.10
+  data_quality_penalty_weight: 0.10
+
+thresholds:
+  p1_critical_min_score: 75.0
+  p2_high_min_score: 55.0
+  p3_moderate_min_score: 35.0
+
+infrastructure_scores:
+  CRITICAL: 100.0   # Drinking water intake, main hospital supply
+  MAJOR: 70.0      # Municipal distribution reservoir, school district
+  STANDARD: 40.0   # General commercial/agricultural irrigation canal
+  MINOR: 15.0      # Secondary drainage ditch, non-residential wetland
+
+communication_penalties:
+  ONLINE: 0.0
+  DEGRADED: 8.0     # Slight penalty adding to urgency due to uncertainty
+  OFFLINE: 15.0     # Higher urgency penalty for blind zone
+
+rules:
+  override_to_p1_conditions:
+    - description: "Severe contamination with high population exposure"
+      min_contamination_probability: 0.85
+      min_exposed_population: 15000
+    - description: "Critical infrastructure threatened with high contamination"
+      min_contamination_probability: 0.75
+      infrastructure_level: "CRITICAL"
+  
+  override_to_p2_conditions:
+    - description: "Moderate contamination with high population or critical infrastructure"
+      min_contamination_probability: 0.60
+      min_exposed_population: 10000
+
+resource_constraints_policy:
+  note: "Resource unavailability must NOT downgrade the hazard priority level; it raises an operational dispatch bottleneck flag."
+  flag_bottleneck_when_unavailable: true
