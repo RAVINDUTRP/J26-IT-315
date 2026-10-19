@@ -1,0 +1,163 @@
+{
+  "device_status": {
+    "boat_001": {
+      "last_route": "[BOAT_001 -> GATEWAY]",
+      "last_seen_sec": 33,
+      "packet_count": 5,
+      "rssi": -27,
+      "snr": 9.8,
+      "status": "online"
+    },
+    "gateway": {
+      "duplicates_rejected": 14,
+      "firebase_connected": true,
+      "free_heap_kb": 160,
+      "status": "online",
+      "total_lora_packets": 23,
+      "uptime_sec": 243,
+      "wifi_connected": true,
+      "wifi_ip": "192.168.1.180",
+      "wifi_rssi": -30
+    },
+    "last_updated": "2026-10-18 14:13:28",
+    "repeater_01": {
+      "last_seen_sec": 4294967295,
+      "packet_count": 0,
+      "rssi": 0,
+      "snr": 0,
+      "status": "offline"
+    },
+    "repeater_02": {
+      "last_seen_sec": 76,
+      "packet_count": 5,
+      "rssi": -38,
+      "snr": 10,
+      "status": "online"
+    }
+  },
+  "history": {
+    "2026-10-18_14-10-24": {
+      "air_temp_c": 35.6,
+      "epoch": 1792312824,
+      "hops": 1,
+      "humidity_pct": 71,
+      "latitude": 6.418984,
+      "longitude": 80.823244,
+      "ph": 3.17,
+      "pitch_deg": -68.5,
+      "roll_deg": 69.7,
+      "route": "[BOAT_001 -> REP_02 -> GATEWAY]",
+      "rssi": -44,
+      "satellites": 9,
+      "sequence_id": 108,
+      "snr": 9.5,
+      "speed_kmh": 0,
+      "tds_ppm": 0,
+      "timestamp": "2026-10-18 14:10:24",
+      "turbidity_pct": 34,
+      "water_temp_c": 30.75
+    },
+    "2026-10-18_14-11-24": {
+      "air_temp_c": 35.6,
+      "epoch": 1792312884,
+      "hops": 0,
+      "humidity_pct": 71,
+      "latitude": 6.418978,
+      "longitude": 80.823221,
+      "ph": 3.16,
+      "pitch_deg": -68.5,
+      "roll_deg": 69.7,
+      "route": "[BOAT_001 -> GATEWAY]",
+      "rssi": -27,
+      "satellites": 9,
+      "sequence_id": 109,
+      "snr": 10.3,
+      "speed_kmh": 0,
+      "tds_ppm": 0,
+      "timestamp": "2026-10-18 14:11:24",
+      "turbidity_pct": 33.9,
+      "water_temp_c": 31
+    },
+    "2026-10-18_14-12-25": {
+      "air_temp_c": 35.6,
+      "epoch": 1792312945,
+      "hops": 0,
+      "humidity_pct": 71,
+      "latitude": 6.418977,
+      "longitude": 80.823255,
+      "ph": 3.15,
+      "pitch_deg": -68.6,
+      "roll_deg": 70,
+      "route": "[BOAT_001 -> GATEWAY]",
+      "rssi": -27,
+      "satellites": 9,
+      "sequence_id": 110,
+      "snr": 10.3,
+      "speed_kmh": 0.1,
+      "tds_ppm": 0,
+      "timestamp": "2026-10-18 14:12:25",
+      "turbidity_pct": 34.2,
+      "water_temp_c": 31
+    },
+    "2026-10-18_14-13-25": {
+      "air_temp_c": 35.6,
+      "epoch": 1792313005,
+      "hops": 0,
+      "humidity_pct": 71,
+      "latitude": 6.419002,
+      "longitude": 80.823292,
+      "ph": 3.16,
+      "pitch_deg": -68.6,
+      "roll_deg": 70,
+      "route": "[BOAT_001 -> GATEWAY]",
+      "rssi": -27,
+      "satellites": 9,
+      "sequence_id": 111,
+      "snr": 9.8,
+      "speed_kmh": 0.3,
+      "tds_ppm": 0,
+      "timestamp": "2026-10-18 14:13:25",
+      "turbidity_pct": 34.2,
+      "water_temp_c": 31
+    }
+  },
+  "live_data": {
+    "attitude": {
+      "accel_z_g": 0.13,
+      "pitch_deg": -68.6,
+      "roll_deg": 70
+    },
+    "environment": {
+      "humidity_pct": 71,
+      "temperature_c": 35.6
+    },
+    "epoch": 1792313007,
+    "mesh_link": {
+      "data_age_sec": 32,
+      "full_route": "[BOAT_001 -> GATEWAY]",
+      "hops": 0,
+      "last_forwarder": "Direct",
+      "rssi": -27,
+      "sequence_id": 111,
+      "session_id": "0xbc61de79",
+      "snr": 9.8,
+      "source_id": "BOAT_001"
+    },
+    "navigation": {
+      "altitude_m": 89.6,
+      "gps_valid": true,
+      "latitude": 6.419002,
+      "longitude": 80.823292,
+      "satellites": 9,
+      "speed_kmh": 0.3
+    },
+    "telemetry_available": true,
+    "timestamp": "2026-10-18 14:13:27",
+    "water": {
+      "ph": 3.16,
+      "tds_ppm": 0,
+      "temperature_c": 31,
+      "turbidity_pct": 34.2
+    }
+  }
+}
