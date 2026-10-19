@@ -1,5 +1,0 @@
-model_name,roc_auc,pr_auc,f1_score,recall,precision,accuracy,false_positive_rate,brier_score
-Logistic Regression Baseline,0.7509,0.4042,0.1919,0.5885,0.1146,0.8272,0.1642,0.169
-Random Forest Baseline,0.7697,0.5343,0.5535,0.4923,0.6321,0.9723,0.0103,0.0649
-XGBoost Classifier,0.7742,0.5624,0.5948,0.4237,0.9976,0.9799,0.0,0.0192
-Hybrid Ensemble (Selected),0.7718,0.5586,0.6134,0.4483,0.9712,0.9803,0.0005,0.0369
