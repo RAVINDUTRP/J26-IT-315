@@ -1,0 +1,13 @@
+{
+  "selected_model": "HybridEnsemble",
+  "method": "weighted_blend",
+  "blend_weight_xgb": 0.4,
+  "base_models": [
+    "xgboost",
+    "random_forest"
+  ],
+  "validation_auc": 0.7782168721942442,
+  "prediction_horizon_hours": 3,
+  "feature_count": 43,
+  "evaluation_period": "2025-10-20 00:00:00+05:30 to 2025-12-31 23:45:00+05:30"
+}

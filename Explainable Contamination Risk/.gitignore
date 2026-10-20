@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+.DS_Store
+Thumbs.db

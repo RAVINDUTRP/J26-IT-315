@@ -1,0 +1,70 @@
+{
+  "sampling_interval_min": 15,
+  "steps_per_hour": 4,
+  "prediction_horizon_steps": 12,
+  "raw_sensor_features": [
+    "ph",
+    "turbidity_ntu",
+    "tds_ppm",
+    "ec_us_cm",
+    "water_temp_c"
+  ],
+  "raw_weather_features": [
+    "rainfall_mm",
+    "precipitation_probability_pct",
+    "weather_temp_c",
+    "weather_humidity_pct",
+    "wind_speed_kmh",
+    "weather_code"
+  ],
+  "physical_limits": {
+    "ph": { "min": 0.0, "max": 14.0, "normal_min": 6.5, "normal_max": 8.5 },
+    "turbidity_ntu": { "min": 0.0, "max": 1000.0, "normal_min": 0.0, "normal_max": 25.0 },
+    "tds_ppm": { "min": 0.0, "max": 5000.0, "normal_min": 50.0, "normal_max": 500.0 },
+    "ec_us_cm": { "min": 0.0, "max": 10000.0, "normal_min": 80.0, "normal_max": 800.0 },
+    "water_temp_c": { "min": 5.0, "max": 50.0, "normal_min": 24.0, "normal_max": 32.0 },
+    "rainfall_mm": { "min": 0.0, "max": 250.0, "normal_min": 0.0, "normal_max": 35.0 }
+  },
+  "engineered_rainfall_windows": [
+    { "name": "rain_1h_mm", "steps": 4 },
+    { "name": "rain_3h_mm", "steps": 12 },
+    { "name": "rain_6h_mm", "steps": 24 },
+    { "name": "rain_24h_mm", "steps": 96 }
+  ],
+  "lag_features": [
+    { "feature": "turbidity_ntu", "lag_steps": 4, "name": "turbidity_lag_1h" },
+    { "feature": "ph", "lag_steps": 4, "name": "ph_lag_1h" },
+    { "feature": "tds_ppm", "lag_steps": 4, "name": "tds_lag_1h" },
+    { "feature": "ec_us_cm", "lag_steps": 4, "name": "ec_lag_1h" },
+    { "feature": "turbidity_ntu", "lag_steps": 12, "name": "turbidity_lag_3h" },
+    { "feature": "ph", "lag_steps": 12, "name": "ph_lag_3h" }
+  ],
+  "rolling_mean_features": [
+    { "feature": "turbidity_ntu", "window_steps": 12, "name": "turbidity_avg_3h" },
+    { "feature": "ph", "window_steps": 12, "name": "ph_avg_3h" },
+    { "feature": "tds_ppm", "window_steps": 12, "name": "tds_avg_3h" },
+    { "feature": "ec_us_cm", "window_steps": 12, "name": "ec_avg_3h" }
+  ],
+  "change_rate_features": [
+    { "feature": "rainfall_mm", "steps": 4, "name": "rainfall_change_rate" },
+    { "feature": "turbidity_ntu", "steps": 4, "name": "turbidity_change_rate" },
+    { "feature": "ph", "steps": 4, "name": "ph_change_rate" },
+    { "feature": "tds_ppm", "steps": 4, "name": "tds_change_rate" },
+    { "feature": "ec_us_cm", "steps": 4, "name": "ec_change_rate" }
+  ],
+  "calendar_features": [
+    "hour",
+    "day_of_week",
+    "month",
+    "season",
+    "is_monsoon",
+    "is_weekend"
+  ],
+  "target_definition": {
+    "binary_target": "future_contamination_event",
+    "category_target": "future_risk_category",
+    "score_target": "future_risk_score",
+    "horizon_hours": 3,
+    "lead_time_minutes": 180
+  }
+}
