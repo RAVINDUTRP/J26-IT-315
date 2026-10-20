@@ -1,0 +1,71 @@
+project:
+  name: "Component 04: AI-Based Disaster Decision Support Framework"
+  component_id: "component04_ml"
+  version: "1.0.0"
+  random_seed: 42
+
+data:
+  raw_path: "data/raw/synthetic_disaster_scenarios.csv"
+  processed_train_path: "data/processed/train_scenarios.csv"
+  processed_test_path: "data/processed/test_scenarios.csv"
+  data_dictionary_path: "data/processed/data_dictionary.csv"
+  num_scenarios: 4000
+  test_size: 0.25
+  stratify: true
+
+target:
+  name: "priority_level"
+  classes: ["P1", "P2", "P3", "P4"]
+  class_labels:
+    P1: "Critical"
+    P2: "High"
+    P3: "Moderate"
+    P4: "Low"
+
+features:
+  numerical:
+    - "contamination_probability"
+    - "prediction_confidence"
+    - "estimated_exposed_population"
+    - "communication_delay_seconds"
+    - "rainfall_mm"
+    - "environmental_change_score"
+    - "sensor_data_freshness_seconds"
+    - "missing_input_count"
+  categorical:
+    - "contamination_risk_category"
+    - "infrastructure_importance"
+    - "communication_status"
+  binary:
+    - "alternative_water_available"
+    - "inspection_team_available"
+    - "treatment_resource_available"
+  context_identifiers:
+    - "scenario_id"
+    - "catchment_zone"
+    - "generation_timestamp"
+
+models:
+  random_forest:
+    n_estimators: 150
+    max_depth: 12
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+    n_jobs: -1
+  xgboost:
+    n_estimators: 150
+    max_depth: 6
+    learning_rate: 0.08
+    subsample: 0.85
+    colsample_bytree: 0.85
+    random_state: 42
+    n_jobs: -1
+    eval_metric: "mlogloss"
+
+artifacts:
+  models_dir: "models"
+  figures_dir: "artifacts/figures"
+  metrics_dir: "artifacts/metrics"
+  explanations_dir: "artifacts/explanations"
+  reports_dir: "artifacts/reports"
